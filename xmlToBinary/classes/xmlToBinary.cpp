@@ -43,7 +43,7 @@ bool xmlToBinary::init()
     return true;
 }
 
-#if 0
+
 
 bool xmlToBinary::converBoneToBinaryByFile(std::string &path,std::string& outPath)
 {
@@ -99,14 +99,14 @@ bool xmlToBinary::converBoneToBinaryByFile(std::string &path,std::string& outPat
         dragonBones::XMLDocument doc;
         doc.Parse(reinterpret_cast<char*>(buffer), readsize);
         auto dragonBonesData = parser.parseDragonBonesData(doc.RootElement());
-        this->convertDragonboneToBinary(dragonBonesData);
+//        this->convertDragonboneToBinary(dragonBonesData);
         return true;
     }
     
     return false;
     
 }
-
+#if 0
 bool xmlToBinary::convertAreaData(flatbuffers::FlatBufferBuilder &builder,IAreaData* armAreaData,std::vector<flatbuffers::Offset<RectangleDataOption>> &areaDataOptArr)
 {
     float width = 0.0f;

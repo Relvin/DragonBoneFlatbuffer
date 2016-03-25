@@ -24,6 +24,7 @@ public:
     
     virtual bool init();
     
+    bool converBoneToBinaryByFile(std::string &path,std::string& outPath);
 #if 0
     bool convertAreaData(flatbuffers::FlatBufferBuilder &builder,IAreaData* armAreaData,std::vector<flatbuffers::Offset<RectangleDataOption>> &areaDataOptArr);
     bool convertBoneData(flatbuffers::FlatBufferBuilder &builder,BoneData* boneData,std::vector<flatbuffers::Offset<BoneOption>> &boneOptionVec);
@@ -34,8 +35,6 @@ public:
     bool convertTransformTimelineData(flatbuffers::FlatBufferBuilder &builder,TransformTimeline* timeline,std::vector<flatbuffers::Offset<TransformTimelineOption>> &transformTimelineOptArr);
     bool convertAnimationData(flatbuffers::FlatBufferBuilder &builder, AnimationData* animationData,std::vector<flatbuffers::Offset<AnimationOption>> &animationOptionOptArr);
     
-    
-    bool converBoneToBinaryByFile(std::string &path,std::string& outPath);
     bool convertDragonboneToBinary (dragonBones::DragonBonesData *bonesData);
     bool convertBinaryBone (dragonBones::DragonBonesData *bonesData);
 #endif

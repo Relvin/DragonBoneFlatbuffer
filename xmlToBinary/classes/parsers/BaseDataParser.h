@@ -5,7 +5,6 @@
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
-class TextureAtlasData;
 class DragonBonesData;
 class ArmatureData;
 class AnimationData;
@@ -19,7 +18,6 @@ class BaseDataParser
 public:
 	BaseDataParser();
 	virtual ~BaseDataParser();
-	virtual TextureAtlasData *parseTextureAtlasData(const void *rawTextureAtlasData, float scale = 1.f) const = 0;
 	virtual DragonBonesData *parseDragonBonesData(const void *rawDragonBonesData, float scale = 1.f) const = 0;
 
 protected:
