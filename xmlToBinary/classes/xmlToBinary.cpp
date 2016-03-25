@@ -48,8 +48,6 @@ bool xmlToBinary::init()
 bool xmlToBinary::converBoneToBinaryByFile(std::string &path,std::string& outPath)
 {
     this->m_filePath = path;
-    
-    
     this->m_outPath = outPath;
     size_t size = 0;
     size_t readsize = 0;

@@ -15,10 +15,24 @@
 #else
 #include <unistd.h>
 #endif
+void test()
+{
+    
+    std::string filename = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/Dragon.xml";
+    filename += "";
+    
+    std::string outpath = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/";
+    xmlToBinary::getInstance()->converBoneToBinaryByFile(filename, outpath);
+    
+    std::cout << " ===>SUCCESS!<===\n";
+}
 
 int main(int argc, const char * argv[]) {
     // insert code here...
     
+    test();
+    
+    return 0;
     std::string extFilePath = "";
     std::string exeName = "";
 	std::string project_path = "";
