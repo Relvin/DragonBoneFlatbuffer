@@ -45,7 +45,7 @@ bool xmlToBinary::init()
 
 
 
-bool xmlToBinary::converBoneToBinaryByFile(std::string &path,std::string& outPath)
+bool xmlToBinary::readFileAndConverToBinary(std::string &path,std::string& outPath)
 {
     this->m_filePath = path;
     this->m_outPath = outPath;
@@ -97,71 +97,75 @@ bool xmlToBinary::converBoneToBinaryByFile(std::string &path,std::string& outPat
         dragonBones::XMLDocument doc;
         doc.Parse(reinterpret_cast<char*>(buffer), readsize);
         auto dragonBonesData = parser.parseDragonBonesData(doc.RootElement());
-//        this->convertDragonboneToBinary(dragonBonesData);
+        this->convertDragonboneToBinary(dragonBonesData);
         return true;
     }
     
     return false;
     
 }
-#if 0
-bool xmlToBinary::convertAreaData(flatbuffers::FlatBufferBuilder &builder,IAreaData* armAreaData,std::vector<flatbuffers::Offset<RectangleDataOption>> &areaDataOptArr)
+
+bool xmlToBinary::convertDragonboneToBinary(dragonBones::DragonBonesData *dragonbonesData)
 {
-    float width = 0.0f;
-    float height = 0.0f;
-    Transform transform;
-    dragonBones::Point pivot;
-    
-    if (armAreaData->areaType == IAreaData::AreaType::AT_ELLIPSE)
+    flatbuffers::FlatBufferBuilder builder;
+    std::vector<flatbuffers::Offset<ArmatureOption>> armatureOptionList;
+    for (int armIdx = 0;armIdx < dragonbonesData->armatureDataList.size();armIdx++)
     {
-        EllipseData* rectData = dynamic_cast<EllipseData* >(armAreaData);
-        if (!rectData)
+        ArmatureData* armData = dragonbonesData->armatureDataList.at(armIdx);
+        
+        std::vector<flatbuffers::Offset<BoneDataOption>> boneDataOptionList;
+        for (int boneIdx = 0;boneIdx < armData->boneDataList.size();boneIdx++)
         {
-            return false;
+            convertBoneData(builder,armData->boneDataList.at(boneIdx), boneDataOptionList);
         }
-        width = rectData->width;
-        height = rectData->height;
-        transform = rectData->transform;
-        pivot = rectData->pivot;
-    }
-    else
-    {
-        RectangleData* rectData = dynamic_cast<RectangleData* >(armAreaData);
-        if (!rectData)
+
+        std::vector<flatbuffers::Offset<SkinDataOption>> skinDataOptionList;
+        for (int skinIdx = 0; skinIdx < armData->skinDataList.size(); skinIdx++)
         {
-            return false;
+            convertSkinData(builder,armData->skinDataList.at(skinIdx), skinDataOptionList);
         }
-        width = rectData->width;
-        height = rectData->height;
-        transform = rectData->transform;
-        pivot = rectData->pivot;
+        
+        std::vector<flatbuffers::Offset<SlotDataOption>> slotDataOptionList;
+        for (int slotIdx = 0; slotIdx < armData->slotDataList.size(); slotIdx++)
+        {
+            convertSlotData(builder,armData->slotDataList.at(slotIdx), slotDataOptionList);
+        }
+
+        std::vector<flatbuffers::Offset<AnimationDataOption>> animationDataOptionList;
+        for (int aniIdx = 0; aniIdx < armData->animationDataList.size(); aniIdx++)
+        {
+            convertAnimationData(builder,armData->animationDataList.at(aniIdx), animationDataOptionList);
+        }
+
+        auto armatureOpt = CreateArmatureOption(builder,
+                                                armData->name.length() == 0 ? 0 : builder.CreateString(armData->name.c_str()),
+                                                boneDataOptionList.size() == 0 ? 0 : builder.CreateVector(boneDataOptionList),
+                                                skinDataOptionList.size() == 0 ? 0 : builder.CreateVector(skinDataOptionList),
+                                                slotDataOptionList.size() == 0 ? 0 : builder.CreateVector(slotDataOptionList),
+                                                animationDataOptionList.size() == 0 ? 0 : builder.CreateVector(animationDataOptionList));
+        
+        armatureOptionList.push_back(armatureOpt);
+
     }
     
-    TransformOption transformOption(transform.x,transform.y,transform.skewX,transform.skewY,transform.scaleX,transform.scaleY);
-    Vec2Option pivotOpt(pivot.x,pivot.y);
     
-    int areaType = (int)armAreaData->areaType ;
-    auto areaOption = CreateAreaDataOption(builder,
-                                           areaType,
-                                           armAreaData->name.length() == 0 ? 0 : builder.CreateString(armAreaData->name.c_str()));
+    auto dragonBoneBinaryData =
+    CreateDragonBones(builder,
+                      dragonbonesData->name.length() == 0 ? 0 : builder.CreateString(dragonbonesData->name.c_str()),
+                      dragonbonesData->autoSearch,
+                      dragonbonesData->isGlobalData,
+                      armatureOptionList.size() == 0 ? 0 : builder.CreateVector(armatureOptionList));
+    FinishDragonBonesBuffer(builder, dragonBoneBinaryData);
     
-    auto rectangleDataOption = CreateRectangleDataOption(builder,
-                                                         width,
-                                                         height,
-                                                         &transformOption,
-                                                         &pivotOpt,
-                                                         areaOption);
+    this->writeToPath((char *)builder.GetBufferPointer(), builder.GetSize());
     
-    areaDataOptArr.push_back(rectangleDataOption);
+    
     return true;
 }
 
-bool xmlToBinary::convertBoneData(flatbuffers::FlatBufferBuilder &builder,BoneData* boneData,std::vector<flatbuffers::Offset<BoneOption>> &boneOptionVec)
+
+bool xmlToBinary::convertBoneData(flatbuffers::FlatBufferBuilder &builder,BoneData* boneData,std::vector<flatbuffers::Offset<BoneDataOption>> &boneDataOptionList)
 {
-    std::vector<flatbuffers::Offset<RectangleDataOption>> bAreaDataOptArr;
-    for (int bAreaIdx = 0; bAreaIdx < boneData->areaDataList.size(); bAreaIdx++) {
-        convertAreaData(builder,boneData->areaDataList.at(bAreaIdx), bAreaDataOptArr);
-    }
     
     bool inheritScale = boneData->inheritScale;
     bool inheritRotation = boneData->inheritRotation;
@@ -174,117 +178,264 @@ bool xmlToBinary::convertBoneData(flatbuffers::FlatBufferBuilder &builder,BoneDa
     Transform transform = boneData->transform;
     TransformOption transformOption(transform.x,transform.y,transform.skewX,transform.skewY,transform.scaleX,transform.scaleY);
     
-    
-    auto boneOption = CreateBoneOption(builder,
+    auto boneDataOption = CreateBoneDataOption(builder,
                                        name.length() == 0 ? 0 : builder.CreateString(name),
                                        parent.length() == 0 ? 0 : builder.CreateString(parent),
                                        length,
                                        inheritScale,
                                        inheritRotation,
                                        &globalOption,
-                                       &transformOption,
-                                       bAreaDataOptArr.size() == 0 ? 0 : builder.CreateVector(bAreaDataOptArr));
-    boneOptionVec.push_back(boneOption);
+                                       &transformOption);
+    boneDataOptionList.push_back(boneDataOption);
     return true;
 }
 
-bool xmlToBinary::convertDisplayData(flatbuffers::FlatBufferBuilder &builder,DisplayData* displayData,std::vector<flatbuffers::Offset<DisplayOption>> &displayDataArr)
+bool xmlToBinary::convertSkinData(flatbuffers::FlatBufferBuilder &builder,dragonBones::SkinData* skinData,std::vector<flatbuffers::Offset<SkinDataOption>> &skinDataOptionList)
 {
-    TextData *textData = displayData->textData;
-    flatbuffers::Offset<TextDataOption> textDataOpt;
-    if (textData != NULL)
+    
+    std::vector<flatbuffers::Offset<SlotDataOption>> slotDataOptionList;
+    for (int slotIdx = 0; slotIdx < skinData->slotDataList.size(); slotIdx++)
     {
-        textDataOpt = CreateTextDataOption(builder,
-                                           textData->bold,
-                                           textData->italic,
-                                           textData->htmlText,
-                                           textData->size,
-                                           textData->alpha,
-                                           textData->red,
-                                           textData->green,
-                                           textData->blue,
-                                           textData->width,
-                                           textData->height,
-                                           textData->letterSpacing,
-                                           textData->lineSpacing,
-                                           textData->maxCharacters,
-                                           textData->face.length() == 0 ? 0 : builder.CreateString(textData->face),
-                                           textData->text.length() == 0 ? 0 : builder.CreateString(textData->text),
-                                           (int)textData->alignH,
-                                           (int)textData->alignV,
-                                           (int)textData->textType,
-                                           (int)textData->lineType
-                                           );
+        convertSlotData(builder,skinData->slotDataList.at(slotIdx), slotDataOptionList);
     }
     
-    bool scalingGrid = displayData->scalingGrid;
-    int left = displayData->scalingGridLeft;
-    int right = displayData->scalingGridRight;
-    int top = displayData->scalingGridTop;
-    int bottom = displayData->scalingGridBottom;
-    
-    std::string name = displayData->name;
-    
-    uint8_t type = (uint8_t)displayData->type;
-    Transform transform = displayData->transform;
-    dragonBones::Point pivot = displayData->pivot;
-    TransformOption transformOption(transform.x,transform.y,transform.skewX,transform.skewY,transform.scaleX,transform.scaleY);
-    Vec2Option point(pivot.x,pivot.y);
-    auto dispLayDataOption = CreateDisplayOption(builder,
-                                                 name.length() == 0 ? 0 : builder.CreateString(name),
-                                                 type,
-                                                 scalingGrid,
-                                                 left,
-                                                 right,
-                                                 top,
-                                                 bottom,
-                                                 &point,
-                                                 &transformOption,
-                                                 textData == NULL ?  0 : textDataOpt);
-    displayDataArr.push_back(dispLayDataOption);
-
+    auto skinName = builder.CreateString(skinData->name);
+    skinDataOptionList.push_back(
+                                 CreateSkinDataOption(builder,
+                                                      skinData->name.length() == 0 ? 0 : skinName,
+                                                      slotDataOptionList.size() == 0 ? 0 : builder.CreateVector(slotDataOptionList)));
     return true;
 }
 
-bool xmlToBinary::convertSlotData(flatbuffers::FlatBufferBuilder &builder,SlotData* slotData,std::vector<flatbuffers::Offset<SlotOption>> &slotDataArr)
+bool xmlToBinary::convertSlotData(flatbuffers::FlatBufferBuilder &builder,SlotData* slotData,std::vector<flatbuffers::Offset<SlotDataOption>> &slotDataOptionList)
 {
-
-        
-        std::vector<flatbuffers::Offset<DisplayOption>> displayDataArr;
-        for (int disIdx = 0; disIdx < slotData->displayDataList.size(); disIdx++)
-        {
-            convertDisplayData(builder,slotData->displayDataList.at(disIdx), displayDataArr);
-        }
-        
-        float zOrder = slotData->zOrder;
-        std::string name = slotData->name;
-        std::string parent = slotData->parent;
-        auto slotOption = CreateSlotOption(builder,
+    
+    
+    std::vector<flatbuffers::Offset<DisplayOption>> displayDataArr;
+    for (int disIdx = 0; disIdx < slotData->displayDataList.size(); disIdx++)
+    {
+        convertDisplayData(builder,slotData->displayDataList.at(disIdx), displayDataArr);
+    }
+    
+    int displayIndex = slotData->displayIndex;
+    float zOrder = slotData->zOrder;
+    std::string name = slotData->name;
+    std::string parent = slotData->parent;
+    auto slotOption = CreateSlotDataOption(builder,
+                                           displayIndex,
                                            zOrder,
                                            name.length() == 0 ? 0 : builder.CreateString(name),
                                            parent.length() == 0 ? 0 : builder.CreateString(parent),
                                            (unsigned char)slotData->blendMode,
                                            displayDataArr.size() == 0 ? 0 : builder.CreateVector(displayDataArr));
-        slotDataArr.push_back(slotOption);
+    
+    slotDataOptionList.push_back(slotOption);
     
     return true;
 }
 
-bool xmlToBinary::convertSkinData(flatbuffers::FlatBufferBuilder &builder,dragonBones::SkinData* skinData,std::vector<flatbuffers::Offset<SkinOption>> &skinOptionVec)
+
+bool xmlToBinary::convertDisplayData(flatbuffers::FlatBufferBuilder &builder,DisplayData* displayData,std::vector<flatbuffers::Offset<DisplayOption>> &displayOptionList)
 {
     
-    std::vector<flatbuffers::Offset<SlotOption>> slotDataArr;
-    for (int slotIdx = 0; slotIdx < skinData->slotDataList.size(); slotIdx++)
-    {
-        convertSlotData(builder,skinData->slotDataList.at(slotIdx), slotDataArr);
-    }
+    std::string name = displayData->name;
+    std::string slotName = displayData->slotName;
+    uint8_t type = (uint8_t)displayData->type;
+    Transform transform = displayData->transform;
+    dragonBones::Point pivot = displayData->pivot;
+    TransformOption transformOption(transform.x,transform.y,transform.skewX,transform.skewY,transform.scaleX,transform.scaleY);
+    PointOption point(pivot.x,pivot.y);
+    auto dispLayDataOption = CreateDisplayOption(builder,
+                                                 name.length() == 0 ? 0 : builder.CreateString(name),
+                                                 slotName.length() == 0 ? 0 : builder.CreateString(slotName),
+                                                 type,
+                                                 &transformOption,
+                                                 &point);
     
-    auto skinName = builder.CreateString(skinData->name);
-    skinOptionVec.push_back(CreateSkinOption(builder,
-                                             skinData->name.length() == 0 ? 0 : skinName,
-                                             slotDataArr.size() == 0 ? 0 : builder.CreateVector(slotDataArr)));
+    displayOptionList.push_back(dispLayDataOption);
+    
     return true;
 }
+
+
+bool xmlToBinary::convertAnimationData(flatbuffers::FlatBufferBuilder &builder, AnimationData* animationData,std::vector<flatbuffers::Offset<AnimationDataOption>> &animationDataOptionList)
+{
+
+    std::vector<flatbuffers::Offset<TransformTimelineOption>> transformTimelineOptionList;
+    for (int tlIdx = 0; tlIdx < animationData->timelineList.size(); tlIdx++)
+    {
+        convertTransformTimelineData(builder,animationData->timelineList.at(tlIdx),transformTimelineOptionList);
+    }
+
+    bool autoTween = animationData->autoTween;
+    int frameRate = animationData->frameRate;
+    int playTimes = animationData->playTimes;
+    float fadeTime = animationData->fadeTime;
+    float tweenEasing = animationData->tweenEasing;
+    std::string name = animationData->name;
+    
+    std::vector<flatbuffers::Offset<FrameOption>> frameOptionArr;
+    {
+        
+        
+        for (int flIdx = 0; flIdx < animationData->frameList.size(); flIdx++) {
+            Frame* frame = animationData->frameList.at(flIdx);
+            convertFrameData(builder, frame, frameOptionArr);
+        }
+        
+    }
+    
+    std::vector<flatbuffers::Offset<flatbuffers::String>> hideTimelineOptionList;
+    for (int hideIdx = 0; hideIdx < animationData->hideTimelineList.size(); hideIdx++) {
+        std::string hideTimeline = animationData->hideTimelineList.at(hideIdx);
+        if (hideTimeline.length() != 0)
+        {
+            hideTimelineOptionList.push_back(builder.CreateString(hideTimeline));
+        }
+        
+    }
+    
+    std::vector<flatbuffers::Offset<SlotTimelineOption>> slotTimelineOptionList;
+    for (int slotTlIdx = 0; slotTlIdx < animationData->slotTimelineList.size(); slotTlIdx++) {
+        auto slotTimeline = animationData->slotTimelineList.at(slotTlIdx);
+        convertSlotTimelineData(builder, slotTimeline, slotTimelineOptionList);
+        
+    }
+    auto animationOption = CreateAnimationDataOption(builder,
+                                                     name.length() == 0 ? 0 : builder.CreateString(name),
+                                                     frameRate,
+                                                     fadeTime,
+                                                     playTimes,
+                                                     tweenEasing,
+                                                     autoTween,
+                                                     animationData->lastFrameDuration,
+                                                     hideTimelineOptionList.size() == 0 ? 0 : builder.CreateVector(hideTimelineOptionList),
+                                                     transformTimelineOptionList.size() == 0 ? 0 : builder.CreateVector(transformTimelineOptionList)
+                                                 );
+    
+    animationDataOptionList.push_back(animationOption);
+
+    return true;
+}
+
+bool xmlToBinary::convertTransformTimelineData(flatbuffers::FlatBufferBuilder &builder,TransformTimeline* timeline,std::vector<flatbuffers::Offset<TransformTimelineOption>> &transformTimelineOptionList)
+{
+    std::vector<flatbuffers::Offset<FrameOption>> frameOptionList;
+    
+    for (int flIdx = 0; flIdx < timeline->frameList.size(); flIdx++)
+    {
+        convertFrameData(builder,timeline->frameList.at(flIdx), frameOptionList);
+    }
+    
+    
+    bool transformed = timeline->transformed;
+    float offset = timeline->offset;
+    
+    std::string name = timeline->name;
+    Transform transform = timeline->originTransform;
+    
+    TransformOption orgTransformOption(transform.x,transform.y,transform.skewX,transform.skewY,transform.scaleX,transform.scaleY);
+    
+    dragonBones::Point originPivot = timeline->originPivot;
+    
+    PointOption pivotOption(originPivot.x,originPivot.y);
+    
+    
+    auto timelinOption = CreateTimelineOption(builder,
+                                              timeline->duration,
+                                              timeline->scale,
+                                              frameOptionList.size() == 0 ? 0 : builder.CreateVector(frameOptionList));
+    auto transformTimelineOpt = CreateTransformTimelineOption(builder,
+                                                              transformed,
+                                                              offset,
+                                                              name.length() == 0 ? 0 : builder.CreateString(name),
+                                                              &orgTransformOption,
+                                                              &pivotOption,
+                                                              timelinOption);
+    
+    transformTimelineOptionList.push_back(transformTimelineOpt);
+    
+    return true;
+}
+
+bool xmlToBinary::convertSlotTimelineData(flatbuffers::FlatBufferBuilder &builder,SlotTimeline* timeline,std::vector<flatbuffers::Offset<SlotTimelineOption>> &slotTimelineOptionList)
+{
+    bool transformed = timeline->transformed;
+    float offset = timeline->offset;
+    std::string name = timeline->name;
+    
+    std::vector<flatbuffers::Offset<FrameOption>> frameOptionList;
+    
+    for (int flIdx = 0; flIdx < timeline->frameList.size(); flIdx++)
+    {
+        convertFrameData(builder,timeline->frameList.at(flIdx), frameOptionList);
+    }
+    
+    auto timelinOption = CreateTimelineOption(builder,
+                                              timeline->duration,
+                                              timeline->scale,
+                                              frameOptionList.size() == 0 ? 0 : builder.CreateVector(frameOptionList));
+    
+    auto slotTimelineOption = CreateSlotTimelineOption(builder,
+                                                       name.length() == 0 ? 0 : builder.CreateString(name),
+                                                       transformed,
+                                                       offset,
+                                                       timelinOption
+                                                       );
+
+    slotTimelineOptionList.push_back(slotTimelineOption);
+    return true;
+}
+
+
+bool xmlToBinary::convertFrameData(flatbuffers::FlatBufferBuilder &builder,Frame *frame,std::vector<flatbuffers::Offset<FrameOption>> &frameOptionList)
+{
+
+    std::string action = frame->action;
+    std::string event = frame->event;
+    std::string sound = frame->sound;
+    
+    uint8_t dataChanged = 0;
+    std::vector<const PointOption *> samplingOptionList;
+    std::vector<const PointOption *> pointOptionList;
+    if (frame->curve)
+    {
+        dataChanged = frame->curve->_dataChanged;
+        for (size_t samIdx = 0; samIdx < frame->curve->sampling.size();samIdx ++)
+        {
+            dragonBones::Point *sampPoint = frame->curve->sampling[samIdx];
+            PointOption pointOption(sampPoint->x,sampPoint->y);
+            samplingOptionList.push_back(&pointOption);
+        }
+        
+        for (size_t samIdx = 0; samIdx < frame->curve->_pointList.size();samIdx ++)
+        {
+            dragonBones::Point *point = frame->curve->_pointList[samIdx];
+            PointOption pointOption(point->x,point->y);
+            pointOptionList.push_back(&pointOption);
+        }
+        
+    }
+    
+    auto curveDataOption = CreateCurveDataOption(builder,
+                                                 dataChanged,
+                                                 pointOptionList.size() == 0 ? 0 : builder.CreateVector(pointOptionList),
+                                                 samplingOptionList.size() == 0 ? 0 : builder.CreateVector(samplingOptionList));
+    auto frameOption = CreateFrameOption(builder,
+                                         frame->position,
+                                         frame->duration,
+                                         (uint8_t)frame->frameType,
+                                         action.length() == 0 ? 0 : builder.CreateString(action),
+                                         event.length() == 0 ? 0 : builder.CreateString(event),
+                                         sound.length() == 0 ? 0 : builder.CreateString(sound),
+                                         frame->curve == nullptr ? 0 : curveDataOption
+                                         );
+    frameOptionList.push_back(frameOption);
+    return true;
+}
+
+
+#if 0
 
 bool xmlToBinary::convertTransformFrameData(flatbuffers::FlatBufferBuilder &builder,TransformFrame* tfFrame,std::vector<flatbuffers::Offset<TransformFrameOption>> &frameOptionArr)
 {
@@ -347,173 +498,6 @@ bool xmlToBinary::convertTransformFrameData(flatbuffers::FlatBufferBuilder &buil
                                                     frameOption
                                                     );
     frameOptionArr.push_back(tfFrameOption);
-    return true;
-}
-
-bool xmlToBinary::convertTransformTimelineData(flatbuffers::FlatBufferBuilder &builder,TransformTimeline* timeline,std::vector<flatbuffers::Offset<TransformTimelineOption>> &transformTimelineOptArr)
-{
-    std::vector<flatbuffers::Offset<TransformFrameOption>> frameOptionArr;
-    
-    for (int flIdx = 0; flIdx < timeline->frameList.size(); flIdx++)
-    {
-        convertTransformFrameData(builder,dynamic_cast<TransformFrame*>(timeline->frameList.at(flIdx)), frameOptionArr);
-    }
-    
-    
-    bool transformed = timeline->transformed;
-    float offset = timeline->offset;
-    
-    std::string name = timeline->name;
-    Transform transform = timeline->originTransform;
-    
-    TransformOption transformOption(transform.x,transform.y,transform.skewX,transform.skewY,transform.scaleX,transform.scaleY);
-    
-    dragonBones::Point originPivot = timeline->originPivot;
-    
-    Vec2Option point(originPivot.x,originPivot.y);
-    
-    
-    auto timelinOption = CreateTimelineOption(builder,
-                                              timeline->duration,
-                                              timeline->scale,
-                                              frameOptionArr.size() == 0 ? 0 : builder.CreateVector(frameOptionArr));
-    auto transformTimelineOpt = CreateTransformTimelineOption(builder,
-                                                              transformed,
-                                                              offset,
-                                                              name.length() == 0 ? 0 : builder.CreateString(name),
-                                                              &transformOption,
-                                                              &point,
-                                                              timelinOption);
-    transformTimelineOptArr.push_back(transformTimelineOpt);
-    
-    return true;
-}
-
-bool xmlToBinary::convertAnimationData(flatbuffers::FlatBufferBuilder &builder, AnimationData* animationData,std::vector<flatbuffers::Offset<AnimationOption>> &animationOptionOptArr)
-{
-    std::vector<flatbuffers::Offset<TransformTimelineOption>> transformTimelineOptArr;
-    for (int tlIdx = 0; tlIdx < animationData->timelineList.size(); tlIdx++)
-    {
-        convertTransformTimelineData(builder,animationData->timelineList.at(tlIdx),transformTimelineOptArr);
-    }
-    
-    bool autoTween = animationData->autoTween;
-    int frameRate = animationData->frameRate;
-    int playTimes = animationData->playTimes;
-    float fadeTime = animationData->fadeTime;
-    float tweenEasing = animationData->tweenEasing;
-    std::string name = animationData->name;
-    
-    std::vector<flatbuffers::Offset<FrameOption>> frameOptionArr;
-    {
-        
-        for (int flIdx = 0; flIdx < animationData->frameList.size(); flIdx++) {
-            Frame* frame = animationData->frameList.at(flIdx);
-            
-            std::string action = frame->action;
-            std::string event = frame->event;
-            std::string sound = frame->sound;
-            std::string eventPs = frame->eventParameters;
-            
-            auto frameOption = CreateFrameOption(builder,
-                                                 frame->position,
-                                                 frame->duration,
-                                                 (uint8_t)frame->frameType,
-                                                 action.length() == 0 ? 0 : builder.CreateString(action),
-                                                 event.length() == 0 ? 0 : builder.CreateString(event),
-                                                 sound.length() == 0 ? 0 : builder.CreateString(sound),
-                                                 eventPs.length() == 0 ? 0 : builder.CreateString(eventPs));
-            
-            
-            
-            frameOptionArr.push_back(frameOption);
-        }
-        
-    }
-    
-    std::vector<flatbuffers::Offset<flatbuffers::String>> hideTimelineArr;
-    for (int hideIdx = 0; hideIdx < animationData->hideTimelineList.size(); hideIdx++) {
-        std::string hideTimeline = animationData->hideTimelineList.at(hideIdx);
-        if (hideTimeline.length() != 0)
-        {
-            hideTimelineArr.push_back(builder.CreateString(hideTimeline));
-        }
-        
-    }
-
-    auto timelinOption = CreateNormalTimelineOption(builder,
-                                                    animationData->duration,
-                                                    animationData->scale,
-                                                    frameOptionArr.size() == 0 ? 0 : builder.CreateVector(frameOptionArr));
-    auto animationOption = CreateAnimationOption(builder,
-                                                 autoTween,
-                                                 frameRate,
-                                                 playTimes,
-                                                 fadeTime,
-                                                 tweenEasing,
-                                                 name.length() == 0 ? 0 : builder.CreateString(name),
-                                                 timelinOption,
-                                                 transformTimelineOptArr.size() == 0 ? 0 : builder.CreateVector(transformTimelineOptArr),
-                                                 hideTimelineArr.size() == 0 ? 0 : builder.CreateVector(hideTimelineArr));
-    animationOptionOptArr.push_back(animationOption);
-    
-    return true;
-}
-
-bool xmlToBinary::convertDragonboneToBinary(dragonBones::DragonBonesData *dragonbonesData)
-{
-    flatbuffers::FlatBufferBuilder builder;
-    std::vector<flatbuffers::Offset<ArmatureOption>> armatureOptVec;
-    for (int armIdx = 0;armIdx < dragonbonesData->armatureDataList.size();armIdx++)
-    {
-        ArmatureData* armData = dragonbonesData->armatureDataList.at(armIdx);
-        std::vector<flatbuffers::Offset<RectangleDataOption>> areaDataOptArr;
-        for (int areaIdx = 0; areaIdx < armData->areaDataList.size(); areaIdx++)
-        {
-            convertAreaData(builder,armData->areaDataList.at(areaIdx), areaDataOptArr);
-        }
-        
-        std::vector<flatbuffers::Offset<BoneOption>> boneOptionVec;
-        for (int boneIdx = 0;boneIdx < armData->boneDataList.size();boneIdx++)
-        {
-            convertBoneData(builder,armData->boneDataList.at(boneIdx), boneOptionVec);
-        }
-        
-        std::vector<flatbuffers::Offset<SkinOption>> skinOptionVec;
-        for (int skinIdx = 0; skinIdx < armData->skinDataList.size(); skinIdx++)
-        {
-            convertSkinData(builder,armData->skinDataList.at(skinIdx), skinOptionVec);
-        }
-        std::vector<flatbuffers::Offset<AnimationOption>> animationOptionOptArr;
-        for (int aniIdx = 0; aniIdx < armData->animationDataList.size(); aniIdx++)
-        {
-            convertAnimationData(builder,armData->animationDataList.at(aniIdx), animationOptionOptArr);
-        }
-        auto armatureOpt = CreateArmatureOption(builder,
-                                                skinOptionVec.size() == 0 ? 0 : builder.CreateVector(skinOptionVec),
-                                                animationOptionOptArr.size() == 0 ? 0 : builder.CreateVector(animationOptionOptArr),
-                                                armData->name.length() == 0 ? 0 : builder.CreateString(armData->name.c_str()),
-                                                boneOptionVec.size() == 0 ? 0 : builder.CreateVector(boneOptionVec),
-                                                areaDataOptArr.size() == 0 ? 0 : builder.CreateVector(areaDataOptArr));
-        armatureOptVec.push_back(armatureOpt);
-    }
-    
-
-    auto dragonBoneBinaryData = CreateDragonBones(builder,
-                                                  dragonbonesData->name.length() == 0 ? 0 : builder.CreateString(dragonbonesData->name.c_str()),
-                                                  dragonbonesData->autoSearch,
-                                                  armatureOptVec.size() == 0 ? 0 : builder.CreateVector(armatureOptVec));
-    FinishDragonBonesBuffer(builder, dragonBoneBinaryData);
-    
-    this->writeToPath((char *)builder.GetBufferPointer(), builder.GetSize());
-    
-    
-    return true;
-}
-
-bool xmlToBinary::convertBinaryBone(dragonBones::DragonBonesData *dragonbonesData)
-{
-    //    dragonbonesData->armatureDataList.push_back();
     return true;
 }
 

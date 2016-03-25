@@ -69,10 +69,11 @@ public:
 
 public:
 	std::vector<Point*> _pointList;
+    bool _dataChanged;
+    std::vector<Point*> sampling;
 
 private:
-	bool _dataChanged;
-	std::vector<Point*> sampling;
+	
 };
 
 NAME_SPACE_DRAGON_BONES_END

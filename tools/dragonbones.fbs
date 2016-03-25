@@ -30,7 +30,7 @@ table FrameOption {
   action: string;
   event: string;
   sound: string;
-  curve: string;
+  curve: CurveDataOption;
 }
 
 table TimelineOption {

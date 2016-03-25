@@ -24,20 +24,26 @@ public:
     
     virtual bool init();
     
-    bool converBoneToBinaryByFile(std::string &path,std::string& outPath);
-#if 0
-    bool convertAreaData(flatbuffers::FlatBufferBuilder &builder,IAreaData* armAreaData,std::vector<flatbuffers::Offset<RectangleDataOption>> &areaDataOptArr);
-    bool convertBoneData(flatbuffers::FlatBufferBuilder &builder,BoneData* boneData,std::vector<flatbuffers::Offset<BoneOption>> &boneOptionVec);
-    bool convertDisplayData(flatbuffers::FlatBufferBuilder &builder,DisplayData* displayData,std::vector<flatbuffers::Offset<DisplayOption>> &displayDataArr);
-    bool convertSlotData(flatbuffers::FlatBufferBuilder &builder,SlotData* slotData,std::vector<flatbuffers::Offset<SlotOption>> &slotDataArr);
-    bool convertSkinData(flatbuffers::FlatBufferBuilder &builder,dragonBones::SkinData* skinData,std::vector<flatbuffers::Offset<SkinOption>> &skinOptionVec);
-    bool convertTransformFrameData(flatbuffers::FlatBufferBuilder &builder,TransformFrame* tfFrame,std::vector<flatbuffers::Offset<TransformFrameOption>> &frameOptionArr);
-    bool convertTransformTimelineData(flatbuffers::FlatBufferBuilder &builder,TransformTimeline* timeline,std::vector<flatbuffers::Offset<TransformTimelineOption>> &transformTimelineOptArr);
-    bool convertAnimationData(flatbuffers::FlatBufferBuilder &builder, AnimationData* animationData,std::vector<flatbuffers::Offset<AnimationOption>> &animationOptionOptArr);
-    
+    bool readFileAndConverToBinary(std::string &path,std::string& outPath);
     bool convertDragonboneToBinary (dragonBones::DragonBonesData *bonesData);
-    bool convertBinaryBone (dragonBones::DragonBonesData *bonesData);
-#endif
+    
+    bool convertBoneData(flatbuffers::FlatBufferBuilder &builder,BoneData* boneData,std::vector<flatbuffers::Offset<BoneDataOption>> &boneDataOptionList);
+    
+    bool convertSkinData(flatbuffers::FlatBufferBuilder &builder,dragonBones::SkinData* skinData,std::vector<flatbuffers::Offset<SkinDataOption>> &skinDataOptionList);
+    
+    bool convertSlotData(flatbuffers::FlatBufferBuilder &builder,SlotData* slotData,std::vector<flatbuffers::Offset<SlotDataOption>> &slotDataOptionList);
+    
+    bool convertDisplayData(flatbuffers::FlatBufferBuilder &builder,DisplayData* displayData,std::vector<flatbuffers::Offset<DisplayOption>> &displayOptionList);
+    
+    bool convertAnimationData(flatbuffers::FlatBufferBuilder &builder, AnimationData* animationData,std::vector<flatbuffers::Offset<AnimationDataOption>> &animationDataOptionList);
+    
+    bool convertTransformTimelineData(flatbuffers::FlatBufferBuilder &builder,TransformTimeline* timeline,std::vector<flatbuffers::Offset<TransformTimelineOption>> &transformTimelineOptionList);
+    
+    bool convertSlotTimelineData(flatbuffers::FlatBufferBuilder &builder,SlotTimeline* timeline,std::vector<flatbuffers::Offset<SlotTimelineOption>> &slotTimelineOptionList);
+    
+
+    bool convertFrameData(flatbuffers::FlatBufferBuilder &builder,Frame *frame,std::vector<flatbuffers::Offset<FrameOption>> &frameOptionList);
+    
     bool writeToPath(const char* data,size_t size);
 private:
     flatbuffers::FlatBufferBuilder builder;

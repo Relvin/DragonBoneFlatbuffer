@@ -106,7 +106,7 @@ struct FrameOption : private flatbuffers::Table {
   const flatbuffers::String *action() const { return GetPointer<const flatbuffers::String *>(10); }
   const flatbuffers::String *event() const { return GetPointer<const flatbuffers::String *>(12); }
   const flatbuffers::String *sound() const { return GetPointer<const flatbuffers::String *>(14); }
-  const flatbuffers::String *curve() const { return GetPointer<const flatbuffers::String *>(16); }
+  const CurveDataOption *curve() const { return GetPointer<const CurveDataOption *>(16); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* position */) &&
@@ -119,7 +119,7 @@ struct FrameOption : private flatbuffers::Table {
            VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* sound */) &&
            verifier.Verify(sound()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 16 /* curve */) &&
-           verifier.Verify(curve()) &&
+           verifier.VerifyTable(curve()) &&
            verifier.EndTable();
   }
 };
@@ -133,7 +133,7 @@ struct FrameOptionBuilder {
   void add_action(flatbuffers::Offset<flatbuffers::String> action) { fbb_.AddOffset(10, action); }
   void add_event(flatbuffers::Offset<flatbuffers::String> event) { fbb_.AddOffset(12, event); }
   void add_sound(flatbuffers::Offset<flatbuffers::String> sound) { fbb_.AddOffset(14, sound); }
-  void add_curve(flatbuffers::Offset<flatbuffers::String> curve) { fbb_.AddOffset(16, curve); }
+  void add_curve(flatbuffers::Offset<CurveDataOption> curve) { fbb_.AddOffset(16, curve); }
   FrameOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   FrameOptionBuilder &operator=(const FrameOptionBuilder &);
   flatbuffers::Offset<FrameOption> Finish() {
@@ -149,7 +149,7 @@ inline flatbuffers::Offset<FrameOption> CreateFrameOption(flatbuffers::FlatBuffe
    flatbuffers::Offset<flatbuffers::String> action = 0,
    flatbuffers::Offset<flatbuffers::String> event = 0,
    flatbuffers::Offset<flatbuffers::String> sound = 0,
-   flatbuffers::Offset<flatbuffers::String> curve = 0) {
+   flatbuffers::Offset<CurveDataOption> curve = 0) {
   FrameOptionBuilder builder_(_fbb);
   builder_.add_curve(curve);
   builder_.add_sound(sound);

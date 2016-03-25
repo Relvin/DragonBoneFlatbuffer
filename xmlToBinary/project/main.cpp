@@ -22,7 +22,7 @@ void test()
     filename += "";
     
     std::string outpath = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/";
-    xmlToBinary::getInstance()->converBoneToBinaryByFile(filename, outpath);
+    xmlToBinary::getInstance()->readFileAndConverToBinary(filename, outpath);
     
     std::cout << " ===>SUCCESS!<===\n";
 }
@@ -60,7 +60,7 @@ int main(int argc, const char * argv[]) {
     std::vector<std::string> fileArray = Platform::loopFiles(project_path.c_str());
     for (int idx = 0;idx < fileArray.size();idx++)
     {
-		xmlToBinary::getInstance()->converBoneToBinaryByFile(fileArray.at(idx), extFilePath);
+		xmlToBinary::getInstance()->readFileAndConverToBinary(fileArray.at(idx), extFilePath);
     }
     
 //    std::string filePath = "/Users/dengqinghong/Desktop/1-boss.xml";
