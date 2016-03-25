@@ -7,19 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		ADA71B0E1C1029F500D1C1BD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B0D1C1029F500D1C1BD /* main.cpp */; };
-		ADA71B451C102A3A00D1C1BD /* idl_gen_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B1C1C102A3A00D1C1BD /* idl_gen_cpp.cpp */; };
-		ADA71B461C102A3A00D1C1BD /* idl_gen_fbs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B1D1C102A3A00D1C1BD /* idl_gen_fbs.cpp */; };
-		ADA71B471C102A3A00D1C1BD /* idl_gen_general.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B1E1C102A3A00D1C1BD /* idl_gen_general.cpp */; };
-		ADA71B481C102A3A00D1C1BD /* idl_gen_go.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B1F1C102A3A00D1C1BD /* idl_gen_go.cpp */; };
-		ADA71B491C102A3A00D1C1BD /* idl_gen_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B201C102A3A00D1C1BD /* idl_gen_text.cpp */; };
-		ADA71B4A1C102A3A00D1C1BD /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B211C102A3A00D1C1BD /* idl_parser.cpp */; };
-		ADA71B4B1C102A3A00D1C1BD /* BaseDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B3A1C102A3A00D1C1BD /* BaseDataParser.cpp */; };
-		ADA71B4C1C102A3A00D1C1BD /* ConstValues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B3C1C102A3A00D1C1BD /* ConstValues.cpp */; };
-		ADA71B4D1C102A3A00D1C1BD /* dbtinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B3E1C102A3A00D1C1BD /* dbtinyxml2.cpp */; };
-		ADA71B4E1C102A3A00D1C1BD /* XMLDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B401C102A3A00D1C1BD /* XMLDataParser.cpp */; };
-		ADA71B4F1C102A3A00D1C1BD /* xmlToBinary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B421C102A3A00D1C1BD /* xmlToBinary.cpp */; };
-		ADA71B521C1031AF00D1C1BD /* Platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B501C1031AF00D1C1BD /* Platform.cpp */; };
+		AD92400A1CA50BD20065F186 /* BaseDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FE71CA50BD20065F186 /* BaseDataParser.cpp */; };
+		AD92400B1CA50BD20065F186 /* ConstValues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FE91CA50BD20065F186 /* ConstValues.cpp */; };
+		AD92400C1CA50BD20065F186 /* JSONDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FEB1CA50BD20065F186 /* JSONDataParser.cpp */; };
+		AD92400D1CA50BD20065F186 /* XMLDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FED1CA50BD20065F186 /* XMLDataParser.cpp */; };
+		AD92400E1CA50BD20065F186 /* Platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FEF1CA50BD20065F186 /* Platform.cpp */; };
+		AD92400F1CA50BD20065F186 /* xmlToBinary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FF11CA50BD20065F186 /* xmlToBinary.cpp */; };
+		AD9240171CA50BD20065F186 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240011CA50BD20065F186 /* main.cpp */; };
+		AD9240281CA50D4B0065F186 /* idl_gen_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240201CA50D4B0065F186 /* idl_gen_cpp.cpp */; };
+		AD9240291CA50D4B0065F186 /* idl_gen_fbs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240211CA50D4B0065F186 /* idl_gen_fbs.cpp */; };
+		AD92402A1CA50D4B0065F186 /* idl_gen_general.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240221CA50D4B0065F186 /* idl_gen_general.cpp */; };
+		AD92402B1CA50D4B0065F186 /* idl_gen_go.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240231CA50D4B0065F186 /* idl_gen_go.cpp */; };
+		AD92402C1CA50D4B0065F186 /* idl_gen_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240241CA50D4B0065F186 /* idl_gen_text.cpp */; };
+		AD92402D1CA50D4B0065F186 /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240251CA50D4B0065F186 /* idl_parser.cpp */; };
+		AD9240551CA50E550065F186 /* dbtinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240531CA50E550065F186 /* dbtinyxml2.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,52 +36,83 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD923FCF1CA50BD20065F186 /* DragonBones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBones.h; sourceTree = "<group>"; };
+		AD923FD01CA50BD20065F186 /* dragonbones_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dragonbones_generated.h; sourceTree = "<group>"; };
+		AD923FD21CA50BD20065F186 /* ColorTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTransform.h; sourceTree = "<group>"; };
+		AD923FD31CA50BD20065F186 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		AD923FD41CA50BD20065F186 /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
+		AD923FD51CA50BD20065F186 /* Rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rectangle.h; sourceTree = "<group>"; };
+		AD923FD61CA50BD20065F186 /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transform.h; sourceTree = "<group>"; };
+		AD923FD81CA50BD20065F186 /* AnimationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationData.h; sourceTree = "<group>"; };
+		AD923FD91CA50BD20065F186 /* ArmatureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureData.h; sourceTree = "<group>"; };
+		AD923FDA1CA50BD20065F186 /* BoneData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoneData.h; sourceTree = "<group>"; };
+		AD923FDB1CA50BD20065F186 /* CurveData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurveData.h; sourceTree = "<group>"; };
+		AD923FDC1CA50BD20065F186 /* DisplayData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayData.h; sourceTree = "<group>"; };
+		AD923FDD1CA50BD20065F186 /* DragonBonesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBonesData.h; sourceTree = "<group>"; };
+		AD923FDE1CA50BD20065F186 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		AD923FDF1CA50BD20065F186 /* SkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkinData.h; sourceTree = "<group>"; };
+		AD923FE01CA50BD20065F186 /* SlotData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotData.h; sourceTree = "<group>"; };
+		AD923FE11CA50BD20065F186 /* SlotFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotFrame.h; sourceTree = "<group>"; };
+		AD923FE21CA50BD20065F186 /* SlotTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotTimeline.h; sourceTree = "<group>"; };
+		AD923FE31CA50BD20065F186 /* Timeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timeline.h; sourceTree = "<group>"; };
+		AD923FE41CA50BD20065F186 /* TransformFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformFrame.h; sourceTree = "<group>"; };
+		AD923FE51CA50BD20065F186 /* TransformTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformTimeline.h; sourceTree = "<group>"; };
+		AD923FE71CA50BD20065F186 /* BaseDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseDataParser.cpp; sourceTree = "<group>"; };
+		AD923FE81CA50BD20065F186 /* BaseDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDataParser.h; sourceTree = "<group>"; };
+		AD923FE91CA50BD20065F186 /* ConstValues.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConstValues.cpp; sourceTree = "<group>"; };
+		AD923FEA1CA50BD20065F186 /* ConstValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstValues.h; sourceTree = "<group>"; };
+		AD923FEB1CA50BD20065F186 /* JSONDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSONDataParser.cpp; sourceTree = "<group>"; };
+		AD923FEC1CA50BD20065F186 /* JSONDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONDataParser.h; sourceTree = "<group>"; };
+		AD923FED1CA50BD20065F186 /* XMLDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLDataParser.cpp; sourceTree = "<group>"; };
+		AD923FEE1CA50BD20065F186 /* XMLDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDataParser.h; sourceTree = "<group>"; };
+		AD923FEF1CA50BD20065F186 /* Platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Platform.cpp; sourceTree = "<group>"; };
+		AD923FF01CA50BD20065F186 /* Platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Platform.h; sourceTree = "<group>"; };
+		AD923FF11CA50BD20065F186 /* xmlToBinary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmlToBinary.cpp; sourceTree = "<group>"; };
+		AD923FF21CA50BD20065F186 /* xmlToBinary.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xmlToBinary.hpp; sourceTree = "<group>"; };
+		AD9240011CA50BD20065F186 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AD92401D1CA50D4B0065F186 /* flatbuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flatbuffers.h; sourceTree = "<group>"; };
+		AD92401E1CA50D4B0065F186 /* flatc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flatc.cpp; sourceTree = "<group>"; };
+		AD92401F1CA50D4B0065F186 /* idl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idl.h; sourceTree = "<group>"; };
+		AD9240201CA50D4B0065F186 /* idl_gen_cpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_cpp.cpp; sourceTree = "<group>"; };
+		AD9240211CA50D4B0065F186 /* idl_gen_fbs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_fbs.cpp; sourceTree = "<group>"; };
+		AD9240221CA50D4B0065F186 /* idl_gen_general.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_general.cpp; sourceTree = "<group>"; };
+		AD9240231CA50D4B0065F186 /* idl_gen_go.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_go.cpp; sourceTree = "<group>"; };
+		AD9240241CA50D4B0065F186 /* idl_gen_text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_text.cpp; sourceTree = "<group>"; };
+		AD9240251CA50D4B0065F186 /* idl_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_parser.cpp; sourceTree = "<group>"; };
+		AD9240261CA50D4B0065F186 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		AD9240301CA50E550065F186 /* flatbuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flatbuffers.h; sourceTree = "<group>"; };
+		AD9240321CA50E550065F186 /* allocators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allocators.h; sourceTree = "<group>"; };
+		AD9240331CA50E550065F186 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		AD9240341CA50E550065F186 /* encodedstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encodedstream.h; sourceTree = "<group>"; };
+		AD9240351CA50E550065F186 /* encodings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encodings.h; sourceTree = "<group>"; };
+		AD9240371CA50E550065F186 /* en.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = en.h; sourceTree = "<group>"; };
+		AD9240381CA50E550065F186 /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
+		AD9240391CA50E550065F186 /* filereadstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filereadstream.h; sourceTree = "<group>"; };
+		AD92403A1CA50E550065F186 /* filewritestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filewritestream.h; sourceTree = "<group>"; };
+		AD92403C1CA50E550065F186 /* biginteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = biginteger.h; sourceTree = "<group>"; };
+		AD92403D1CA50E550065F186 /* diyfp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = diyfp.h; sourceTree = "<group>"; };
+		AD92403E1CA50E550065F186 /* dtoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtoa.h; sourceTree = "<group>"; };
+		AD92403F1CA50E550065F186 /* ieee754.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ieee754.h; sourceTree = "<group>"; };
+		AD9240401CA50E550065F186 /* itoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itoa.h; sourceTree = "<group>"; };
+		AD9240411CA50E550065F186 /* meta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meta.h; sourceTree = "<group>"; };
+		AD9240421CA50E550065F186 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
+		AD9240431CA50E550065F186 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		AD9240441CA50E550065F186 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
+		AD9240451CA50E550065F186 /* strtod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strtod.h; sourceTree = "<group>"; };
+		AD9240461CA50E550065F186 /* swap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swap.h; sourceTree = "<group>"; };
+		AD9240471CA50E550065F186 /* memorybuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memorybuffer.h; sourceTree = "<group>"; };
+		AD9240481CA50E550065F186 /* memorystream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memorystream.h; sourceTree = "<group>"; };
+		AD92404A1CA50E550065F186 /* inttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inttypes.h; sourceTree = "<group>"; };
+		AD92404B1CA50E550065F186 /* stdint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdint.h; sourceTree = "<group>"; };
+		AD92404C1CA50E550065F186 /* pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pointer.h; sourceTree = "<group>"; };
+		AD92404D1CA50E550065F186 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
+		AD92404E1CA50E550065F186 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
+		AD92404F1CA50E550065F186 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		AD9240501CA50E550065F186 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
+		AD9240511CA50E550065F186 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		AD9240531CA50E550065F186 /* dbtinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbtinyxml2.cpp; sourceTree = "<group>"; };
+		AD9240541CA50E550065F186 /* dbtinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbtinyxml2.h; sourceTree = "<group>"; };
 		ADA71B0A1C1029F500D1C1BD /* xmlToBinary */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xmlToBinary; sourceTree = BUILT_PRODUCTS_DIR; };
-		ADA71B0D1C1029F500D1C1BD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		ADA71B141C102A3A00D1C1BD /* dragonbones_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dragonbones_generated.h; sourceTree = "<group>"; };
-		ADA71B151C102A3A00D1C1BD /* DragonBones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBones.h; sourceTree = "<group>"; };
-		ADA71B191C102A3A00D1C1BD /* flatbuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flatbuffers.h; sourceTree = "<group>"; };
-		ADA71B1A1C102A3A00D1C1BD /* flatc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flatc.cpp; sourceTree = "<group>"; };
-		ADA71B1B1C102A3A00D1C1BD /* idl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idl.h; sourceTree = "<group>"; };
-		ADA71B1C1C102A3A00D1C1BD /* idl_gen_cpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_cpp.cpp; sourceTree = "<group>"; };
-		ADA71B1D1C102A3A00D1C1BD /* idl_gen_fbs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_fbs.cpp; sourceTree = "<group>"; };
-		ADA71B1E1C102A3A00D1C1BD /* idl_gen_general.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_general.cpp; sourceTree = "<group>"; };
-		ADA71B1F1C102A3A00D1C1BD /* idl_gen_go.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_go.cpp; sourceTree = "<group>"; };
-		ADA71B201C102A3A00D1C1BD /* idl_gen_text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_text.cpp; sourceTree = "<group>"; };
-		ADA71B211C102A3A00D1C1BD /* idl_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_parser.cpp; sourceTree = "<group>"; };
-		ADA71B221C102A3A00D1C1BD /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
-		ADA71B241C102A3A00D1C1BD /* ColorTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTransform.h; sourceTree = "<group>"; };
-		ADA71B251C102A3A00D1C1BD /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
-		ADA71B261C102A3A00D1C1BD /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
-		ADA71B271C102A3A00D1C1BD /* Rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rectangle.h; sourceTree = "<group>"; };
-		ADA71B281C102A3A00D1C1BD /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transform.h; sourceTree = "<group>"; };
-		ADA71B2A1C102A3A00D1C1BD /* AnimationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationData.h; sourceTree = "<group>"; };
-		ADA71B2B1C102A3A00D1C1BD /* ArmatureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureData.h; sourceTree = "<group>"; };
-		ADA71B2C1C102A3A00D1C1BD /* BoneData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoneData.h; sourceTree = "<group>"; };
-		ADA71B2D1C102A3A00D1C1BD /* DisplayData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayData.h; sourceTree = "<group>"; };
-		ADA71B2E1C102A3A00D1C1BD /* DragonBonesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBonesData.h; sourceTree = "<group>"; };
-		ADA71B2F1C102A3A00D1C1BD /* EllipseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EllipseData.h; sourceTree = "<group>"; };
-		ADA71B301C102A3A00D1C1BD /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		ADA71B311C102A3A00D1C1BD /* IAreaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAreaData.h; sourceTree = "<group>"; };
-		ADA71B321C102A3A00D1C1BD /* RectangleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleData.h; sourceTree = "<group>"; };
-		ADA71B331C102A3A00D1C1BD /* SkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkinData.h; sourceTree = "<group>"; };
-		ADA71B341C102A3A00D1C1BD /* SlotData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotData.h; sourceTree = "<group>"; };
-		ADA71B351C102A3A00D1C1BD /* TextData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextData.h; sourceTree = "<group>"; };
-		ADA71B361C102A3A00D1C1BD /* Timeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timeline.h; sourceTree = "<group>"; };
-		ADA71B371C102A3A00D1C1BD /* TransformFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformFrame.h; sourceTree = "<group>"; };
-		ADA71B381C102A3A00D1C1BD /* TransformTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformTimeline.h; sourceTree = "<group>"; };
-		ADA71B3A1C102A3A00D1C1BD /* BaseDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseDataParser.cpp; sourceTree = "<group>"; };
-		ADA71B3B1C102A3A00D1C1BD /* BaseDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDataParser.h; sourceTree = "<group>"; };
-		ADA71B3C1C102A3A00D1C1BD /* ConstValues.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConstValues.cpp; sourceTree = "<group>"; };
-		ADA71B3D1C102A3A00D1C1BD /* ConstValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstValues.h; sourceTree = "<group>"; };
-		ADA71B3E1C102A3A00D1C1BD /* dbtinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbtinyxml2.cpp; sourceTree = "<group>"; };
-		ADA71B3F1C102A3A00D1C1BD /* dbtinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbtinyxml2.h; sourceTree = "<group>"; };
-		ADA71B401C102A3A00D1C1BD /* XMLDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLDataParser.cpp; sourceTree = "<group>"; };
-		ADA71B411C102A3A00D1C1BD /* XMLDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDataParser.h; sourceTree = "<group>"; };
-		ADA71B421C102A3A00D1C1BD /* xmlToBinary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmlToBinary.cpp; sourceTree = "<group>"; };
-		ADA71B431C102A3A00D1C1BD /* xmlToBinary.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xmlToBinary.hpp; sourceTree = "<group>"; };
-		ADA71B501C1031AF00D1C1BD /* Platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Platform.cpp; sourceTree = "<group>"; };
-		ADA71B511C1031AF00D1C1BD /* Platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Platform.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,10 +126,191 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD923FCE1CA50BD20065F186 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				AD92402E1CA50E550065F186 /* 3rd */,
+				AD92401A1CA50D4B0065F186 /* flatbuffers */,
+				AD923FCF1CA50BD20065F186 /* DragonBones.h */,
+				AD923FD01CA50BD20065F186 /* dragonbones_generated.h */,
+				AD923FD11CA50BD20065F186 /* geoms */,
+				AD923FD71CA50BD20065F186 /* objects */,
+				AD923FE61CA50BD20065F186 /* parsers */,
+				AD923FEF1CA50BD20065F186 /* Platform.cpp */,
+				AD923FF01CA50BD20065F186 /* Platform.h */,
+				AD923FF11CA50BD20065F186 /* xmlToBinary.cpp */,
+				AD923FF21CA50BD20065F186 /* xmlToBinary.hpp */,
+			);
+			name = Classes;
+			path = ../../Classes;
+			sourceTree = "<group>";
+		};
+		AD923FD11CA50BD20065F186 /* geoms */ = {
+			isa = PBXGroup;
+			children = (
+				AD923FD21CA50BD20065F186 /* ColorTransform.h */,
+				AD923FD31CA50BD20065F186 /* Matrix.h */,
+				AD923FD41CA50BD20065F186 /* Point.h */,
+				AD923FD51CA50BD20065F186 /* Rectangle.h */,
+				AD923FD61CA50BD20065F186 /* Transform.h */,
+			);
+			path = geoms;
+			sourceTree = "<group>";
+		};
+		AD923FD71CA50BD20065F186 /* objects */ = {
+			isa = PBXGroup;
+			children = (
+				AD923FD81CA50BD20065F186 /* AnimationData.h */,
+				AD923FD91CA50BD20065F186 /* ArmatureData.h */,
+				AD923FDA1CA50BD20065F186 /* BoneData.h */,
+				AD923FDB1CA50BD20065F186 /* CurveData.h */,
+				AD923FDC1CA50BD20065F186 /* DisplayData.h */,
+				AD923FDD1CA50BD20065F186 /* DragonBonesData.h */,
+				AD923FDE1CA50BD20065F186 /* Frame.h */,
+				AD923FDF1CA50BD20065F186 /* SkinData.h */,
+				AD923FE01CA50BD20065F186 /* SlotData.h */,
+				AD923FE11CA50BD20065F186 /* SlotFrame.h */,
+				AD923FE21CA50BD20065F186 /* SlotTimeline.h */,
+				AD923FE31CA50BD20065F186 /* Timeline.h */,
+				AD923FE41CA50BD20065F186 /* TransformFrame.h */,
+				AD923FE51CA50BD20065F186 /* TransformTimeline.h */,
+			);
+			path = objects;
+			sourceTree = "<group>";
+		};
+		AD923FE61CA50BD20065F186 /* parsers */ = {
+			isa = PBXGroup;
+			children = (
+				AD923FE71CA50BD20065F186 /* BaseDataParser.cpp */,
+				AD923FE81CA50BD20065F186 /* BaseDataParser.h */,
+				AD923FE91CA50BD20065F186 /* ConstValues.cpp */,
+				AD923FEA1CA50BD20065F186 /* ConstValues.h */,
+				AD923FEB1CA50BD20065F186 /* JSONDataParser.cpp */,
+				AD923FEC1CA50BD20065F186 /* JSONDataParser.h */,
+				AD923FED1CA50BD20065F186 /* XMLDataParser.cpp */,
+				AD923FEE1CA50BD20065F186 /* XMLDataParser.h */,
+			);
+			path = parsers;
+			sourceTree = "<group>";
+		};
+		AD9240001CA50BD20065F186 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				AD9240011CA50BD20065F186 /* main.cpp */,
+			);
+			name = Project;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		AD92401A1CA50D4B0065F186 /* flatbuffers */ = {
+			isa = PBXGroup;
+			children = (
+				AD92401D1CA50D4B0065F186 /* flatbuffers.h */,
+				AD92401E1CA50D4B0065F186 /* flatc.cpp */,
+				AD92401F1CA50D4B0065F186 /* idl.h */,
+				AD9240201CA50D4B0065F186 /* idl_gen_cpp.cpp */,
+				AD9240211CA50D4B0065F186 /* idl_gen_fbs.cpp */,
+				AD9240221CA50D4B0065F186 /* idl_gen_general.cpp */,
+				AD9240231CA50D4B0065F186 /* idl_gen_go.cpp */,
+				AD9240241CA50D4B0065F186 /* idl_gen_text.cpp */,
+				AD9240251CA50D4B0065F186 /* idl_parser.cpp */,
+				AD9240261CA50D4B0065F186 /* util.h */,
+			);
+			path = flatbuffers;
+			sourceTree = "<group>";
+		};
+		AD92402E1CA50E550065F186 /* 3rd */ = {
+			isa = PBXGroup;
+			children = (
+				AD92402F1CA50E550065F186 /* flatbuffers */,
+				AD9240311CA50E550065F186 /* rapidjson */,
+				AD9240521CA50E550065F186 /* tinyxml2 */,
+			);
+			path = 3rd;
+			sourceTree = "<group>";
+		};
+		AD92402F1CA50E550065F186 /* flatbuffers */ = {
+			isa = PBXGroup;
+			children = (
+				AD9240301CA50E550065F186 /* flatbuffers.h */,
+			);
+			path = flatbuffers;
+			sourceTree = "<group>";
+		};
+		AD9240311CA50E550065F186 /* rapidjson */ = {
+			isa = PBXGroup;
+			children = (
+				AD9240321CA50E550065F186 /* allocators.h */,
+				AD9240331CA50E550065F186 /* document.h */,
+				AD9240341CA50E550065F186 /* encodedstream.h */,
+				AD9240351CA50E550065F186 /* encodings.h */,
+				AD9240361CA50E550065F186 /* error */,
+				AD9240391CA50E550065F186 /* filereadstream.h */,
+				AD92403A1CA50E550065F186 /* filewritestream.h */,
+				AD92403B1CA50E550065F186 /* internal */,
+				AD9240471CA50E550065F186 /* memorybuffer.h */,
+				AD9240481CA50E550065F186 /* memorystream.h */,
+				AD9240491CA50E550065F186 /* msinttypes */,
+				AD92404C1CA50E550065F186 /* pointer.h */,
+				AD92404D1CA50E550065F186 /* prettywriter.h */,
+				AD92404E1CA50E550065F186 /* rapidjson.h */,
+				AD92404F1CA50E550065F186 /* reader.h */,
+				AD9240501CA50E550065F186 /* stringbuffer.h */,
+				AD9240511CA50E550065F186 /* writer.h */,
+			);
+			path = rapidjson;
+			sourceTree = "<group>";
+		};
+		AD9240361CA50E550065F186 /* error */ = {
+			isa = PBXGroup;
+			children = (
+				AD9240371CA50E550065F186 /* en.h */,
+				AD9240381CA50E550065F186 /* error.h */,
+			);
+			path = error;
+			sourceTree = "<group>";
+		};
+		AD92403B1CA50E550065F186 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				AD92403C1CA50E550065F186 /* biginteger.h */,
+				AD92403D1CA50E550065F186 /* diyfp.h */,
+				AD92403E1CA50E550065F186 /* dtoa.h */,
+				AD92403F1CA50E550065F186 /* ieee754.h */,
+				AD9240401CA50E550065F186 /* itoa.h */,
+				AD9240411CA50E550065F186 /* meta.h */,
+				AD9240421CA50E550065F186 /* pow10.h */,
+				AD9240431CA50E550065F186 /* stack.h */,
+				AD9240441CA50E550065F186 /* strfunc.h */,
+				AD9240451CA50E550065F186 /* strtod.h */,
+				AD9240461CA50E550065F186 /* swap.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		AD9240491CA50E550065F186 /* msinttypes */ = {
+			isa = PBXGroup;
+			children = (
+				AD92404A1CA50E550065F186 /* inttypes.h */,
+				AD92404B1CA50E550065F186 /* stdint.h */,
+			);
+			path = msinttypes;
+			sourceTree = "<group>";
+		};
+		AD9240521CA50E550065F186 /* tinyxml2 */ = {
+			isa = PBXGroup;
+			children = (
+				AD9240531CA50E550065F186 /* dbtinyxml2.cpp */,
+				AD9240541CA50E550065F186 /* dbtinyxml2.h */,
+			);
+			path = tinyxml2;
+			sourceTree = "<group>";
+		};
 		ADA71B011C1029F500D1C1BD = {
 			isa = PBXGroup;
 			children = (
-				ADA71B0C1C1029F500D1C1BD /* xmlToBinary */,
+				AD923FCE1CA50BD20065F186 /* Classes */,
+				AD9240001CA50BD20065F186 /* Project */,
 				ADA71B0B1C1029F500D1C1BD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,90 +321,6 @@
 				ADA71B0A1C1029F500D1C1BD /* xmlToBinary */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		ADA71B0C1C1029F500D1C1BD /* xmlToBinary */ = {
-			isa = PBXGroup;
-			children = (
-				ADA71B501C1031AF00D1C1BD /* Platform.cpp */,
-				ADA71B511C1031AF00D1C1BD /* Platform.h */,
-				ADA71B141C102A3A00D1C1BD /* dragonbones_generated.h */,
-				ADA71B151C102A3A00D1C1BD /* DragonBones.h */,
-				ADA71B161C102A3A00D1C1BD /* flatbuffers */,
-				ADA71B231C102A3A00D1C1BD /* geoms */,
-				ADA71B291C102A3A00D1C1BD /* objects */,
-				ADA71B391C102A3A00D1C1BD /* parsers */,
-				ADA71B421C102A3A00D1C1BD /* xmlToBinary.cpp */,
-				ADA71B431C102A3A00D1C1BD /* xmlToBinary.hpp */,
-				ADA71B0D1C1029F500D1C1BD /* main.cpp */,
-			);
-			path = xmlToBinary;
-			sourceTree = "<group>";
-		};
-		ADA71B161C102A3A00D1C1BD /* flatbuffers */ = {
-			isa = PBXGroup;
-			children = (
-				ADA71B191C102A3A00D1C1BD /* flatbuffers.h */,
-				ADA71B1A1C102A3A00D1C1BD /* flatc.cpp */,
-				ADA71B1B1C102A3A00D1C1BD /* idl.h */,
-				ADA71B1C1C102A3A00D1C1BD /* idl_gen_cpp.cpp */,
-				ADA71B1D1C102A3A00D1C1BD /* idl_gen_fbs.cpp */,
-				ADA71B1E1C102A3A00D1C1BD /* idl_gen_general.cpp */,
-				ADA71B1F1C102A3A00D1C1BD /* idl_gen_go.cpp */,
-				ADA71B201C102A3A00D1C1BD /* idl_gen_text.cpp */,
-				ADA71B211C102A3A00D1C1BD /* idl_parser.cpp */,
-				ADA71B221C102A3A00D1C1BD /* util.h */,
-			);
-			path = flatbuffers;
-			sourceTree = "<group>";
-		};
-		ADA71B231C102A3A00D1C1BD /* geoms */ = {
-			isa = PBXGroup;
-			children = (
-				ADA71B241C102A3A00D1C1BD /* ColorTransform.h */,
-				ADA71B251C102A3A00D1C1BD /* Matrix.h */,
-				ADA71B261C102A3A00D1C1BD /* Point.h */,
-				ADA71B271C102A3A00D1C1BD /* Rectangle.h */,
-				ADA71B281C102A3A00D1C1BD /* Transform.h */,
-			);
-			path = geoms;
-			sourceTree = "<group>";
-		};
-		ADA71B291C102A3A00D1C1BD /* objects */ = {
-			isa = PBXGroup;
-			children = (
-				ADA71B2A1C102A3A00D1C1BD /* AnimationData.h */,
-				ADA71B2B1C102A3A00D1C1BD /* ArmatureData.h */,
-				ADA71B2C1C102A3A00D1C1BD /* BoneData.h */,
-				ADA71B2D1C102A3A00D1C1BD /* DisplayData.h */,
-				ADA71B2E1C102A3A00D1C1BD /* DragonBonesData.h */,
-				ADA71B2F1C102A3A00D1C1BD /* EllipseData.h */,
-				ADA71B301C102A3A00D1C1BD /* Frame.h */,
-				ADA71B311C102A3A00D1C1BD /* IAreaData.h */,
-				ADA71B321C102A3A00D1C1BD /* RectangleData.h */,
-				ADA71B331C102A3A00D1C1BD /* SkinData.h */,
-				ADA71B341C102A3A00D1C1BD /* SlotData.h */,
-				ADA71B351C102A3A00D1C1BD /* TextData.h */,
-				ADA71B361C102A3A00D1C1BD /* Timeline.h */,
-				ADA71B371C102A3A00D1C1BD /* TransformFrame.h */,
-				ADA71B381C102A3A00D1C1BD /* TransformTimeline.h */,
-			);
-			path = objects;
-			sourceTree = "<group>";
-		};
-		ADA71B391C102A3A00D1C1BD /* parsers */ = {
-			isa = PBXGroup;
-			children = (
-				ADA71B3A1C102A3A00D1C1BD /* BaseDataParser.cpp */,
-				ADA71B3B1C102A3A00D1C1BD /* BaseDataParser.h */,
-				ADA71B3C1C102A3A00D1C1BD /* ConstValues.cpp */,
-				ADA71B3D1C102A3A00D1C1BD /* ConstValues.h */,
-				ADA71B3E1C102A3A00D1C1BD /* dbtinyxml2.cpp */,
-				ADA71B3F1C102A3A00D1C1BD /* dbtinyxml2.h */,
-				ADA71B401C102A3A00D1C1BD /* XMLDataParser.cpp */,
-				ADA71B411C102A3A00D1C1BD /* XMLDataParser.h */,
-			);
-			path = parsers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,19 +379,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADA71B481C102A3A00D1C1BD /* idl_gen_go.cpp in Sources */,
-				ADA71B491C102A3A00D1C1BD /* idl_gen_text.cpp in Sources */,
-				ADA71B461C102A3A00D1C1BD /* idl_gen_fbs.cpp in Sources */,
-				ADA71B521C1031AF00D1C1BD /* Platform.cpp in Sources */,
-				ADA71B4A1C102A3A00D1C1BD /* idl_parser.cpp in Sources */,
-				ADA71B471C102A3A00D1C1BD /* idl_gen_general.cpp in Sources */,
-				ADA71B4E1C102A3A00D1C1BD /* XMLDataParser.cpp in Sources */,
-				ADA71B4B1C102A3A00D1C1BD /* BaseDataParser.cpp in Sources */,
-				ADA71B451C102A3A00D1C1BD /* idl_gen_cpp.cpp in Sources */,
-				ADA71B0E1C1029F500D1C1BD /* main.cpp in Sources */,
-				ADA71B4F1C102A3A00D1C1BD /* xmlToBinary.cpp in Sources */,
-				ADA71B4C1C102A3A00D1C1BD /* ConstValues.cpp in Sources */,
-				ADA71B4D1C102A3A00D1C1BD /* dbtinyxml2.cpp in Sources */,
+				AD92402C1CA50D4B0065F186 /* idl_gen_text.cpp in Sources */,
+				AD92400C1CA50BD20065F186 /* JSONDataParser.cpp in Sources */,
+				AD92400F1CA50BD20065F186 /* xmlToBinary.cpp in Sources */,
+				AD9240171CA50BD20065F186 /* main.cpp in Sources */,
+				AD92400A1CA50BD20065F186 /* BaseDataParser.cpp in Sources */,
+				AD92402D1CA50D4B0065F186 /* idl_parser.cpp in Sources */,
+				AD92400D1CA50BD20065F186 /* XMLDataParser.cpp in Sources */,
+				AD92402B1CA50D4B0065F186 /* idl_gen_go.cpp in Sources */,
+				AD92402A1CA50D4B0065F186 /* idl_gen_general.cpp in Sources */,
+				AD92400B1CA50BD20065F186 /* ConstValues.cpp in Sources */,
+				AD9240281CA50D4B0065F186 /* idl_gen_cpp.cpp in Sources */,
+				AD9240291CA50D4B0065F186 /* idl_gen_fbs.cpp in Sources */,
+				AD9240551CA50E550065F186 /* dbtinyxml2.cpp in Sources */,
+				AD92400E1CA50BD20065F186 /* Platform.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +439,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT) $(SRCROOT)/../../Classes $(SRCROOT)/../../Project";
 			};
 			name = Debug;
 		};
@@ -345,6 +476,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT) $(SRCROOT)/../../Classes $(SRCROOT)/../../Project";
 			};
 			name = Release;
 		};
@@ -357,7 +489,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/xmlToBinary";
+				USER_HEADER_SEARCH_PATHS = "$(inherited)";
 			};
 			name = Debug;
 		};
@@ -366,7 +498,7 @@
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_MAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/xmlToBinary";
+				USER_HEADER_SEARCH_PATHS = "$(inherited)";
 			};
 			name = Release;
 		};
@@ -389,6 +521,7 @@
 				ADA71B131C1029F500D1C1BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

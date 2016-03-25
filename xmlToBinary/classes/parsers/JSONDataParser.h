@@ -8,7 +8,6 @@
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
-class TextureAtlasData;
 class DragonBonesData;
 class ArmatureData;
 class AnimationData;
@@ -16,7 +15,6 @@ class BoneData;
 class TransformFrame;
 class TransformTimeline;
 class Transform;
-class TextureData;
 class SkinData;
 class SlotData;
 class DisplayData;
@@ -30,11 +28,9 @@ class ColorTransform;
 class JSONDataParser : public BaseDataParser
 {
 public:
-	static TextureAtlasData* parseTextureAtlasData(const char *rawTextureAtlasData);
     static DragonBonesData* parseDragonBonesData(const char *rawDragonBonesData);
     
 private:
-    static TextureData* parseTextureData(const rapidjson::Value &inTextures);
     static ArmatureData* parseArmatureData(const rapidjson::Value &inArmatures, int frameRate = 30);
     static BoneData* parseBoneData(const rapidjson::Value &inBones);
     static SkinData* parseSkinData(const rapidjson::Value &inSkins);

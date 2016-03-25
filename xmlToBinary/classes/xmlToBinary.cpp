@@ -43,6 +43,8 @@ bool xmlToBinary::init()
     return true;
 }
 
+#if 0
+
 bool xmlToBinary::converBoneToBinaryByFile(std::string &path,std::string& outPath)
 {
     this->m_filePath = path;
@@ -104,7 +106,6 @@ bool xmlToBinary::converBoneToBinaryByFile(std::string &path,std::string& outPat
     return false;
     
 }
-
 
 bool xmlToBinary::convertAreaData(flatbuffers::FlatBufferBuilder &builder,IAreaData* armAreaData,std::vector<flatbuffers::Offset<RectangleDataOption>> &areaDataOptArr)
 {
@@ -517,6 +518,8 @@ bool xmlToBinary::convertBinaryBone(dragonBones::DragonBonesData *dragonbonesDat
     //    dragonbonesData->armatureDataList.push_back();
     return true;
 }
+
+#endif
 
 bool xmlToBinary::writeToPath(const char* data,size_t size)
 {

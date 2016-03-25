@@ -22,9 +22,6 @@
 #include "objects/ArmatureData.h"
 #include "objects/DragonBonesData.h"
 #include "objects/SlotFrame.h"
-// textures
-#include "textures/TextureData.h"
-#include "textures/TextureAtlasData.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 

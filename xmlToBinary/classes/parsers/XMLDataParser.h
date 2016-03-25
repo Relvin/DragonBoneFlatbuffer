@@ -8,7 +8,6 @@
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
-class TextureAtlasData;
 class DragonBonesData;
 class ArmatureData;
 class AnimationData;
@@ -16,7 +15,6 @@ class BoneData;
 class TransformFrame;
 class TransformTimeline;
 class Transform;
-class TextureData;
 class SkinData;
 class SlotData;
 class DisplayData;
@@ -32,14 +30,12 @@ class XMLDataParser : public BaseDataParser
 public:
     XMLDataParser();
     virtual ~XMLDataParser();
-    virtual TextureAtlasData* parseTextureAtlasData(const void *rawTextureAtlasData, float scale = 1.f) const;
     virtual DragonBonesData* parseDragonBonesData(const void *rawDragonBonesData,float scale = 1.f) const;
     
 private:
 	static bool getBoolean(const XMLElement &data, const char *key, bool defaultValue);
 	static float getNumber(const XMLElement &data, const char *key, float defaultValue, float nanValue);
 
-    TextureData* parseTextureData(const XMLElement *textureXML) const;    
     ArmatureData* parseArmatureData(const XMLElement *armatureXML) const;
     BoneData* parseBoneData(const XMLElement *boneXML) const;
     SkinData* parseSkinData(const XMLElement *skinXML) const;

@@ -20,9 +20,6 @@
 #include "objects/ArmatureData.h"
 #include "objects/DragonBonesData.h"
 #include "objects/SlotFrame.h"
-// textures
-#include "textures/TextureData.h"
-#include "textures/TextureAtlasData.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -55,50 +52,6 @@ namespace
 			return value[name].GetBool();
 		else return defaultValue;
 	}
-}
-
-TextureAtlasData* JSONDataParser::parseTextureAtlasData(const char *rawTextureAtlasData)
-{
-	rapidjson::Document document;
-	assert(!document.Parse(rawTextureAtlasData).HasParseError());
-	assert(document.IsObject());
-
-	TextureAtlasData *textureAtlasData = new TextureAtlasData();
-	textureAtlasData->name = GET_STRING(document, ConstValues::A_NAME.c_str());
-	textureAtlasData->imagePath = GET_STRING(document, ConstValues::A_IMAGE_PATH.c_str());
-	textureAtlasData->format = getPixelFormatByString(GET_STRING(document, ConstValues::A_IMAGE_FORMAT.c_str()));
-
-	const rapidjson::Value& subtextures = document[ConstValues::SUB_TEXTURE.c_str()];
-	assert(subtextures.IsArray());
-	for (rapidjson::SizeType i = 0; i < subtextures.Size(); i++)
-	{
-		TextureData *textureData = parseTextureData(subtextures[i]);
-		textureAtlasData->textureDataList.push_back(textureData);
-	}
-    return textureAtlasData;
-}
-
-TextureData* JSONDataParser::parseTextureData(const rapidjson::Value &inTextures)
-{
-    TextureData *textureData = new TextureData();
-	textureData->name = GET_STRING(inTextures, ConstValues::A_NAME.c_str());
-	textureData->rotated = GET_BOOL(inTextures, ConstValues::A_ROTATED.c_str());
-	textureData->region.x = GET_FLOAT(inTextures, ConstValues::A_X.c_str());
-	textureData->region.y = GET_FLOAT(inTextures, ConstValues::A_Y.c_str());
-	textureData->region.width = GET_FLOAT(inTextures, ConstValues::A_WIDTH.c_str());
-	textureData->region.height = GET_FLOAT(inTextures, ConstValues::A_HEIGHT.c_str());
-	const float frameWidth = GET_FLOAT(inTextures, ConstValues::A_FRAME_WIDTH.c_str());
-	const float frameHeight = GET_FLOAT(inTextures, ConstValues::A_FRAME_HEIGHT.c_str());
-
-	if (frameWidth > 0 && frameHeight > 0)
-	{
-		textureData->frame = new Rectangle();
-		textureData->frame->x = GET_FLOAT(inTextures, ConstValues::A_FRAME_X.c_str());
-		textureData->frame->y = GET_FLOAT(inTextures, ConstValues::A_FRAME_Y.c_str());
-		textureData->frame->width = frameWidth;
-		textureData->frame->height = frameHeight;
-	}
-    return textureData;
 }
 
 DragonBonesData* JSONDataParser::parseDragonBonesData(const char *rawDragonBonesData)

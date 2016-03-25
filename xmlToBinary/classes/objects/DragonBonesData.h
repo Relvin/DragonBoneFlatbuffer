@@ -3,11 +3,9 @@
 
 #include "DragonBones.h"
 #include "ArmatureData.h"
-#include "base/CCRef.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 class DragonBonesData
-: public cocos2d::Ref
 {    
 public:
     DragonBonesData() : 

@@ -20,9 +20,7 @@
 #include "objects/ArmatureData.h"
 #include "objects/DragonBonesData.h"
 #include "objects/SlotFrame.h"
-// textures
-#include "textures/TextureData.h"
-#include "textures/TextureAtlasData.h"
+
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 bool XMLDataParser::getBoolean(const XMLElement &data, const char *key, bool defaultValue)
@@ -84,51 +82,6 @@ XMLDataParser::XMLDataParser() :
 {}
 XMLDataParser::~XMLDataParser()
 {
-}
-
-TextureAtlasData* XMLDataParser::parseTextureAtlasData(const void *rawTextureAtlasData, float scale) const
-{
-    _textureScale = scale;
-    const XMLElement *textureAtlasXML = static_cast<const XMLElement*>(rawTextureAtlasData);
-    TextureAtlasData *textureAtlasData = new TextureAtlasData();
-    const char *name = textureAtlasXML->Attribute(ConstValues::A_NAME.c_str());
-    textureAtlasData->name = name ? name : "";
-    textureAtlasData->imagePath = textureAtlasXML->Attribute(ConstValues::A_IMAGE_PATH.c_str());
-    const char *format = textureAtlasXML->Attribute(ConstValues::A_IMAGE_FORMAT.c_str());
-    textureAtlasData->format = getPixelFormatByString(format ? format : "");
-    
-    for (const XMLElement *textureXML = textureAtlasXML->FirstChildElement(ConstValues::SUB_TEXTURE.c_str()); 
-		textureXML; textureXML = textureXML->NextSiblingElement(ConstValues::SUB_TEXTURE.c_str()))
-    {
-        TextureData *textureData = parseTextureData(textureXML);
-        textureAtlasData->textureDataList.push_back(textureData);
-    }
-    
-    return textureAtlasData;
-}
-
-TextureData* XMLDataParser::parseTextureData(const XMLElement *textureXML) const
-{
-    TextureData *textureData = new TextureData();
-    textureData->name = textureXML->Attribute(ConstValues::A_NAME.c_str());
-    textureData->rotated = textureXML->BoolAttribute(ConstValues::A_ROTATED.c_str());
-    textureData->region.x = textureXML->FloatAttribute(ConstValues::A_X.c_str()) / _textureScale;
-    textureData->region.y = textureXML->FloatAttribute(ConstValues::A_Y.c_str()) / _textureScale;
-    textureData->region.width = textureXML->FloatAttribute(ConstValues::A_WIDTH.c_str()) / _textureScale;
-    textureData->region.height = textureXML->FloatAttribute(ConstValues::A_HEIGHT.c_str()) / _textureScale;
-    const float frameWidth = textureXML->FloatAttribute(ConstValues::A_FRAME_WIDTH.c_str()) / _textureScale;
-    const float frameHeight = textureXML->FloatAttribute(ConstValues::A_FRAME_HEIGHT.c_str()) / _textureScale;
-    
-    if (frameWidth > 0 && frameHeight > 0)
-    {
-        textureData->frame = new Rectangle();
-        textureData->frame->x = textureXML->FloatAttribute(ConstValues::A_FRAME_X.c_str()) / _textureScale;
-        textureData->frame->y = textureXML->FloatAttribute(ConstValues::A_FRAME_Y.c_str()) / _textureScale;
-        textureData->frame->width = frameWidth;
-        textureData->frame->height = frameHeight;
-    }
-    
-    return textureData;
 }
 
 DragonBonesData* XMLDataParser::parseDragonBonesData(const void *rawDragonBonesData,float scale) const

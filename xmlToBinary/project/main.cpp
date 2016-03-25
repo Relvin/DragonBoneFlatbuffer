@@ -46,7 +46,7 @@ int main(int argc, const char * argv[]) {
     std::vector<std::string> fileArray = Platform::loopFiles(project_path.c_str());
     for (int idx = 0;idx < fileArray.size();idx++)
     {
-		xmlToBinary::getInstance()->converBoneToBinaryByFile(fileArray.at(idx), extFilePath);
+//		xmlToBinary::getInstance()->converBoneToBinaryByFile(fileArray.at(idx), extFilePath);
     }
     
 //    std::string filePath = "/Users/dengqinghong/Desktop/1-boss.xml";
