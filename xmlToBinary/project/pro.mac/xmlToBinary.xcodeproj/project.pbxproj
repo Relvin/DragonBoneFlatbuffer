@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD70DD991CAA242C002F6DE2 /* BinaryParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD70DD971CAA242C002F6DE2 /* BinaryParser.cpp */; };
 		AD92400A1CA50BD20065F186 /* BaseDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FE71CA50BD20065F186 /* BaseDataParser.cpp */; };
 		AD92400B1CA50BD20065F186 /* ConstValues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FE91CA50BD20065F186 /* ConstValues.cpp */; };
 		AD92400C1CA50BD20065F186 /* JSONDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD923FEB1CA50BD20065F186 /* JSONDataParser.cpp */; };
@@ -36,6 +37,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD70DD971CAA242C002F6DE2 /* BinaryParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryParser.cpp; path = ../../classes/parsers/BinaryParser.cpp; sourceTree = "<group>"; };
+		AD70DD981CAA242C002F6DE2 /* BinaryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BinaryParser.h; path = ../../classes/parsers/BinaryParser.h; sourceTree = "<group>"; };
 		AD923FCF1CA50BD20065F186 /* DragonBones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBones.h; sourceTree = "<group>"; };
 		AD923FD01CA50BD20065F186 /* dragonbones_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dragonbones_generated.h; sourceTree = "<group>"; };
 		AD923FD21CA50BD20065F186 /* ColorTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTransform.h; sourceTree = "<group>"; };
@@ -189,6 +192,8 @@
 				AD923FEC1CA50BD20065F186 /* JSONDataParser.h */,
 				AD923FED1CA50BD20065F186 /* XMLDataParser.cpp */,
 				AD923FEE1CA50BD20065F186 /* XMLDataParser.h */,
+				AD70DD971CAA242C002F6DE2 /* BinaryParser.cpp */,
+				AD70DD981CAA242C002F6DE2 /* BinaryParser.h */,
 			);
 			path = parsers;
 			sourceTree = "<group>";
@@ -386,6 +391,7 @@
 				AD92400A1CA50BD20065F186 /* BaseDataParser.cpp in Sources */,
 				AD92402D1CA50D4B0065F186 /* idl_parser.cpp in Sources */,
 				AD92400D1CA50BD20065F186 /* XMLDataParser.cpp in Sources */,
+				AD70DD991CAA242C002F6DE2 /* BinaryParser.cpp in Sources */,
 				AD92402B1CA50D4B0065F186 /* idl_gen_go.cpp in Sources */,
 				AD92402A1CA50D4B0065F186 /* idl_gen_general.cpp in Sources */,
 				AD92400B1CA50BD20065F186 /* ConstValues.cpp in Sources */,

@@ -98,6 +98,8 @@ bool xmlToBinary::readFileAndConverToBinary(std::string &path,std::string& outPa
         doc.Parse(reinterpret_cast<char*>(buffer), readsize);
         auto dragonBonesData = parser.parseDragonBonesData(doc.RootElement());
         this->convertDragonboneToBinary(dragonBonesData);
+        
+        free(buffer);
         return true;
     }
     
