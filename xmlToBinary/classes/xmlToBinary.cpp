@@ -9,6 +9,7 @@
 #include "xmlToBinary.hpp"
 #include "parsers/XMLDataParser.h"
 #include "Platform.h"
+#include "parsers/BinaryParser.h"
 
 static xmlToBinary* s_instance = nullptr;
 
@@ -27,6 +28,7 @@ xmlToBinary::xmlToBinary()
 : m_filePath ("")
 , m_outPath ("")
 , notCreate(false)
+, readXMLB (false)
 {
     
 }
@@ -55,7 +57,7 @@ bool xmlToBinary::readFileAndConverToBinary(std::string &path,std::string& outPa
     size_t pos = filename.find_last_of('.');
     std::string suffix = filename.substr(pos + 1, path.length());
     
-    if (suffix != "xml")
+    if (suffix != "xml" && suffix != "xmlb")
     {
         printf("%s is not xml file !\n",path.c_str());
         return false;
@@ -93,11 +95,23 @@ bool xmlToBinary::readFileAndConverToBinary(std::string &path,std::string& outPa
     }
     else
     {
-        dragonBones::XMLDataParser parser;
-        dragonBones::XMLDocument doc;
-        doc.Parse(reinterpret_cast<char*>(buffer), readsize);
-        auto dragonBonesData = parser.parseDragonBonesData(doc.RootElement());
-        this->convertDragonboneToBinary(dragonBonesData);
+        if (suffix == "xml")
+        {
+            readXMLB = false;
+            dragonBones::XMLDataParser parser;
+            dragonBones::XMLDocument doc;
+            doc.Parse(reinterpret_cast<char*>(buffer), readsize);
+            auto dragonBonesData = parser.parseDragonBonesData(doc.RootElement());
+            this->convertDragonboneToBinary(dragonBonesData);
+        }
+        else
+        {
+            readXMLB = true;
+            dragonBones::BinaryParser parser;
+            auto dragonBonesData = parser.parseDragonBonesData(buffer);
+            this->convertDragonboneToBinary(dragonBonesData);
+        }
+        
         
         free(buffer);
         return true;
@@ -152,12 +166,13 @@ bool xmlToBinary::convertDragonboneToBinary(dragonBones::DragonBonesData *dragon
     
     
     auto dragonBoneBinaryData =
-    CreateDragonBones(builder,
+    CreateDragonBonesParseBinary(builder,
                       dragonbonesData->name.length() == 0 ? 0 : builder.CreateString(dragonbonesData->name.c_str()),
                       dragonbonesData->autoSearch,
                       dragonbonesData->isGlobalData,
+                      dragonbonesData->version.length() == 0 ? 0 : builder.CreateString(dragonbonesData->version.c_str()),
                       armatureOptionList.size() == 0 ? 0 : builder.CreateVector(armatureOptionList));
-    FinishDragonBonesBuffer(builder, dragonBoneBinaryData);
+    FinishDragonBonesParseBinaryBuffer(builder, dragonBoneBinaryData);
     
     this->writeToPath((char *)builder.GetBufferPointer(), builder.GetSize());
     
@@ -213,7 +228,7 @@ bool xmlToBinary::convertSlotData(flatbuffers::FlatBufferBuilder &builder,SlotDa
 {
     
     
-    std::vector<flatbuffers::Offset<DisplayOption>> displayDataArr;
+    std::vector<flatbuffers::Offset<DisplayDataOption>> displayDataArr;
     for (int disIdx = 0; disIdx < slotData->displayDataList.size(); disIdx++)
     {
         convertDisplayData(builder,slotData->displayDataList.at(disIdx), displayDataArr);
@@ -237,7 +252,7 @@ bool xmlToBinary::convertSlotData(flatbuffers::FlatBufferBuilder &builder,SlotDa
 }
 
 
-bool xmlToBinary::convertDisplayData(flatbuffers::FlatBufferBuilder &builder,DisplayData* displayData,std::vector<flatbuffers::Offset<DisplayOption>> &displayOptionList)
+bool xmlToBinary::convertDisplayData(flatbuffers::FlatBufferBuilder &builder,DisplayData* displayData,std::vector<flatbuffers::Offset<DisplayDataOption>> &displayOptionList)
 {
     
     std::string name = displayData->name;
@@ -247,7 +262,7 @@ bool xmlToBinary::convertDisplayData(flatbuffers::FlatBufferBuilder &builder,Dis
     dragonBones::Point pivot = displayData->pivot;
     TransformOption transformOption(transform.x,transform.y,transform.skewX,transform.skewY,transform.scaleX,transform.scaleY);
     PointOption point(pivot.x,pivot.y);
-    auto dispLayDataOption = CreateDisplayOption(builder,
+    auto dispLayDataOption = CreateDisplayDataOption(builder,
                                                  name.length() == 0 ? 0 : builder.CreateString(name),
                                                  slotName.length() == 0 ? 0 : builder.CreateString(slotName),
                                                  type,
@@ -276,16 +291,20 @@ bool xmlToBinary::convertAnimationData(flatbuffers::FlatBufferBuilder &builder, 
     float tweenEasing = animationData->tweenEasing;
     std::string name = animationData->name;
     
-    std::vector<flatbuffers::Offset<FrameOption>> frameOptionArr;
+    std::vector<flatbuffers::Offset<FrameOption>> frameOptionList;
+    
+    for (int flIdx = 0; flIdx < animationData->frameList.size(); flIdx++)
     {
-        
-        
-        for (int flIdx = 0; flIdx < animationData->frameList.size(); flIdx++) {
-            Frame* frame = animationData->frameList.at(flIdx);
-            convertFrameData(builder, frame, frameOptionArr);
-        }
-        
+        auto frameOption = convertFrameData(builder,animationData->frameList.at(flIdx));
+        frameOptionList.push_back(frameOption);
     }
+    
+    auto timelinOption = CreateTimelineOption(builder,
+                                              animationData->duration,
+                                              animationData->scale,
+                                              0,
+                                              0,
+                                              frameOptionList.size() == 0 ? 0 : builder.CreateVector(frameOptionList));
     
     std::vector<flatbuffers::Offset<flatbuffers::String>> hideTimelineOptionList;
     for (int hideIdx = 0; hideIdx < animationData->hideTimelineList.size(); hideIdx++) {
@@ -311,9 +330,12 @@ bool xmlToBinary::convertAnimationData(flatbuffers::FlatBufferBuilder &builder, 
                                                      tweenEasing,
                                                      autoTween,
                                                      animationData->lastFrameDuration,
+                                                     timelinOption,
                                                      hideTimelineOptionList.size() == 0 ? 0 : builder.CreateVector(hideTimelineOptionList),
-                                                     transformTimelineOptionList.size() == 0 ? 0 : builder.CreateVector(transformTimelineOptionList)
+                                                     transformTimelineOptionList.size() == 0 ? 0 : builder.CreateVector(transformTimelineOptionList),
+                                                     slotTimelineOptionList.size() == 0 ? 0 : builder.CreateVector(slotTimelineOptionList)
                                                  );
+    
     
     animationDataOptionList.push_back(animationOption);
 
@@ -322,13 +344,18 @@ bool xmlToBinary::convertAnimationData(flatbuffers::FlatBufferBuilder &builder, 
 
 bool xmlToBinary::convertTransformTimelineData(flatbuffers::FlatBufferBuilder &builder,TransformTimeline* timeline,std::vector<flatbuffers::Offset<TransformTimelineOption>> &transformTimelineOptionList)
 {
-    std::vector<flatbuffers::Offset<FrameOption>> frameOptionList;
+    std::vector<flatbuffers::Offset<TransformFrameOption>> transformFrameOptionList;
     
     for (int flIdx = 0; flIdx < timeline->frameList.size(); flIdx++)
     {
-        convertFrameData(builder,timeline->frameList.at(flIdx), frameOptionList);
+        TransformFrame* transformFrame = dynamic_cast<TransformFrame *>(timeline->frameList.at(flIdx));
+        if (transformFrame)
+        {
+            auto transformOption = convertTransformFrameData(builder,transformFrame);
+            transformFrameOptionList.push_back(transformOption);
+        }
+        
     }
-    
     
     bool transformed = timeline->transformed;
     float offset = timeline->offset;
@@ -346,7 +373,7 @@ bool xmlToBinary::convertTransformTimelineData(flatbuffers::FlatBufferBuilder &b
     auto timelinOption = CreateTimelineOption(builder,
                                               timeline->duration,
                                               timeline->scale,
-                                              frameOptionList.size() == 0 ? 0 : builder.CreateVector(frameOptionList));
+                                              transformFrameOptionList.size() == 0 ? 0 : builder.CreateVector(transformFrameOptionList));
     auto transformTimelineOpt = CreateTransformTimelineOption(builder,
                                                               transformed,
                                                               offset,
@@ -366,17 +393,23 @@ bool xmlToBinary::convertSlotTimelineData(flatbuffers::FlatBufferBuilder &builde
     float offset = timeline->offset;
     std::string name = timeline->name;
     
-    std::vector<flatbuffers::Offset<FrameOption>> frameOptionList;
+    std::vector<flatbuffers::Offset<SlotFrameOption>> slotFrameOptionList;
     
     for (int flIdx = 0; flIdx < timeline->frameList.size(); flIdx++)
     {
-        convertFrameData(builder,timeline->frameList.at(flIdx), frameOptionList);
+        SlotFrame* slotFrame = dynamic_cast<SlotFrame *>(timeline->frameList.at(flIdx));
+        if (slotFrame)
+        {
+            auto frameOption = convertSlotFrameData(builder,slotFrame);
+            slotFrameOptionList.push_back(frameOption);
+        }
     }
     
     auto timelinOption = CreateTimelineOption(builder,
                                               timeline->duration,
                                               timeline->scale,
-                                              frameOptionList.size() == 0 ? 0 : builder.CreateVector(frameOptionList));
+                                              0,
+                                              slotFrameOptionList.size() == 0 ? 0 : builder.CreateVector(slotFrameOptionList));
     
     auto slotTimelineOption = CreateSlotTimelineOption(builder,
                                                        name.length() == 0 ? 0 : builder.CreateString(name),
@@ -389,8 +422,39 @@ bool xmlToBinary::convertSlotTimelineData(flatbuffers::FlatBufferBuilder &builde
     return true;
 }
 
+flatbuffers::Offset<TransformFrameOption> xmlToBinary::convertTransformFrameData(flatbuffers::FlatBufferBuilder &builder,TransformFrame *transformFrame)
+{
+    if (!transformFrame)
+    {
+        return 0;
+    }
 
-bool xmlToBinary::convertFrameData(flatbuffers::FlatBufferBuilder &builder,Frame *frame,std::vector<flatbuffers::Offset<FrameOption>> &frameOptionList)
+    Transform global = transformFrame->global;
+    TransformOption globalOption(global.x,global.y,global.skewX,global.skewY,global.scaleX,global.scaleY);
+    Transform transform = transformFrame->transform;
+    TransformOption transformOption(transform.x,transform.y,transform.skewX,transform.skewY,transform.scaleX,transform.scaleY);
+    dragonBones::Point pivot = transformFrame->pivot;
+    PointOption pivotOption(pivot.x,pivot.y);
+    
+    dragonBones::Point scaleOffset = transformFrame->scaleOffset;
+    PointOption scaleOffsetOption(scaleOffset.x,scaleOffset.y);
+    
+    auto frameOption = convertFrameData(builder, transformFrame);
+    auto transformFrameOption = CreateTransformFrameOption(builder,
+                                                           transformFrame->visible,
+                                                           transformFrame->tweenScale,
+                                                           transformFrame->tweenRotate,
+                                                           transformFrame->tweenEasing,
+                                                           &globalOption,
+                                                           &transformOption,
+                                                           &pivotOption,
+                                                           &scaleOffsetOption,
+                                                           frameOption
+                                                           );
+    return transformFrameOption;
+}
+
+flatbuffers::Offset<FrameOption> xmlToBinary::convertFrameData(flatbuffers::FlatBufferBuilder &builder,Frame *frame)
 {
 
     std::string action = frame->action;
@@ -432,8 +496,46 @@ bool xmlToBinary::convertFrameData(flatbuffers::FlatBufferBuilder &builder,Frame
                                          sound.length() == 0 ? 0 : builder.CreateString(sound),
                                          frame->curve == nullptr ? 0 : curveDataOption
                                          );
-    frameOptionList.push_back(frameOption);
-    return true;
+    return frameOption;
+}
+
+flatbuffers::Offset<SlotFrameOption> xmlToBinary::convertSlotFrameData(flatbuffers::FlatBufferBuilder &builder,SlotFrame *slotFrame)
+{
+    if (!slotFrame)
+    {
+        return 0;
+    }
+    auto colorTransformOption = convertColorTransformData(builder, slotFrame->color);
+    auto frameOption = convertFrameData(builder, slotFrame);
+    auto slotFrameOption = CreateSlotFrameOption(builder,
+                                                 slotFrame->visible,
+                                                 slotFrame->zOrder,
+                                                 slotFrame->displayIndex,
+                                                 slotFrame->tweenEasing,
+                                                 colorTransformOption,
+                                                 frameOption
+                                                 );
+    return slotFrameOption;
+}
+
+flatbuffers::Offset<ColorTransformOption> xmlToBinary::convertColorTransformData(flatbuffers::FlatBufferBuilder &builder,ColorTransform *colorTransform)
+{
+    if (colorTransform)
+    {
+        auto colorTransformOption = CreateColorTransformOption(builder,
+                                                               colorTransform->alphaMultiplier,
+                                                               colorTransform->redMultiplier,
+                                                               colorTransform->greenMultiplier,
+                                                               colorTransform->blueMultiplier,
+                                                               colorTransform->alphaOffset,
+                                                               colorTransform->redOffset,
+                                                               colorTransform->greenOffset,
+                                                               colorTransform->blueOffset
+                                                               );
+        return colorTransformOption;
+    }
+    return 0;
+    
 }
 
 
@@ -510,6 +612,10 @@ bool xmlToBinary::writeToPath(const char* data,size_t size)
 	printf("%s\n", m_filePath.c_str());
     std::string binaryFilePath = m_filePath;
     std::string suffix = ".xmlb";
+    if (readXMLB)
+    {
+        suffix += "b";
+    }
     std::string outFilePath = "";
     size_t final_pos = 0;
     char mode = '/';

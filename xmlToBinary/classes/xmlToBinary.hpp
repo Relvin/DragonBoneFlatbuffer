@@ -9,9 +9,9 @@
 #ifndef xmlToBinary_hpp
 #define xmlToBinary_hpp
 
-#include <stdio.h>
 #include "objects/DragonBonesData.h"
 #include "dragonbones_generated.h"
+#include "objects/SlotFrame.h"
 
 using namespace dragonBones;
 class xmlToBinary
@@ -33,7 +33,7 @@ public:
     
     bool convertSlotData(flatbuffers::FlatBufferBuilder &builder,SlotData* slotData,std::vector<flatbuffers::Offset<SlotDataOption>> &slotDataOptionList);
     
-    bool convertDisplayData(flatbuffers::FlatBufferBuilder &builder,DisplayData* displayData,std::vector<flatbuffers::Offset<DisplayOption>> &displayOptionList);
+    bool convertDisplayData(flatbuffers::FlatBufferBuilder &builder,DisplayData* displayData,std::vector<flatbuffers::Offset<DisplayDataOption>> &displayOptionList);
     
     bool convertAnimationData(flatbuffers::FlatBufferBuilder &builder, AnimationData* animationData,std::vector<flatbuffers::Offset<AnimationDataOption>> &animationDataOptionList);
     
@@ -42,7 +42,11 @@ public:
     bool convertSlotTimelineData(flatbuffers::FlatBufferBuilder &builder,SlotTimeline* timeline,std::vector<flatbuffers::Offset<SlotTimelineOption>> &slotTimelineOptionList);
     
 
-    bool convertFrameData(flatbuffers::FlatBufferBuilder &builder,Frame *frame,std::vector<flatbuffers::Offset<FrameOption>> &frameOptionList);
+    flatbuffers::Offset<TransformFrameOption> convertTransformFrameData(flatbuffers::FlatBufferBuilder &builder,TransformFrame *transformFrame);
+    
+    flatbuffers::Offset<FrameOption> convertFrameData(flatbuffers::FlatBufferBuilder &builder,Frame *frame);
+    flatbuffers::Offset<SlotFrameOption> convertSlotFrameData(flatbuffers::FlatBufferBuilder &builder,SlotFrame *slotFrame);
+    flatbuffers::Offset<ColorTransformOption> convertColorTransformData(flatbuffers::FlatBufferBuilder &builder,ColorTransform *colorTransform);
     
     bool writeToPath(const char* data,size_t size);
 private:
@@ -51,6 +55,8 @@ private:
     std::string m_outPath;
 	bool notCreate;
     
+    //for test
+    bool readXMLB;
 };
 
 

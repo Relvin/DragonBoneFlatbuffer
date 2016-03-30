@@ -11,6 +11,7 @@ public:
     DragonBonesData() : 
 		autoSearch(false)
 		,isGlobalData(false)
+        ,version("")
     {}
 
     DragonBonesData(const DragonBonesData &copyData)
@@ -64,6 +65,7 @@ public:
 	bool autoSearch;
 	bool isGlobalData;
 	std::string name;
+    std::string version;
 	std::vector<ArmatureData*> armatureDataList;
 };
 NAME_SPACE_DRAGON_BONES_END

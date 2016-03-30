@@ -102,7 +102,7 @@ DragonBonesData* XMLDataParser::parseDragonBonesData(const void *rawDragonBonesD
     dragonBonesData->name = dragonBonesXML->Attribute(ConstValues::A_NAME.c_str());
 	dragonBonesData->isGlobalData = _isGlobalData = 
 		(strcmp(dragonBonesXML->Attribute(ConstValues::A_IS_GLOBAL.c_str()), "0") == 0) ? false : true;
-    
+    dragonBonesData->version = version;
     for (const XMLElement *armatureXML = dragonBonesXML->FirstChildElement(ConstValues::ARMATURE.c_str()); 
 			armatureXML; armatureXML = armatureXML->NextSiblingElement(ConstValues::ARMATURE.c_str()))
     {

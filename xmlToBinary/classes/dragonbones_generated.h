@@ -12,16 +12,19 @@ struct PointOption;
 struct TransformOption;
 struct CurveDataOption;
 struct FrameOption;
+struct TransformFrameOption;
+struct ColorTransformOption;
+struct SlotFrameOption;
 struct TimelineOption;
 struct TransformTimelineOption;
-struct DisplayOption;
+struct DisplayDataOption;
 struct SlotTimelineOption;
 struct BoneDataOption;
 struct SlotDataOption;
 struct SkinDataOption;
 struct AnimationDataOption;
 struct ArmatureOption;
-struct DragonBones;
+struct DragonBonesParseBinary;
 
 MANUALLY_ALIGNED_STRUCT(4) PointOption {
  private:
@@ -161,15 +164,210 @@ inline flatbuffers::Offset<FrameOption> CreateFrameOption(flatbuffers::FlatBuffe
   return builder_.Finish();
 }
 
+struct TransformFrameOption : private flatbuffers::Table {
+  uint8_t visible() const { return GetField<uint8_t>(4, 0); }
+  uint8_t tweenScale() const { return GetField<uint8_t>(6, 0); }
+  int32_t tweenRotate() const { return GetField<int32_t>(8, 0); }
+  float tweenEasing() const { return GetField<float>(10, 0); }
+  const TransformOption *global() const { return GetStruct<const TransformOption *>(12); }
+  const TransformOption *transform() const { return GetStruct<const TransformOption *>(14); }
+  const PointOption *pivot() const { return GetStruct<const PointOption *>(16); }
+  const PointOption *scaleOffset() const { return GetStruct<const PointOption *>(18); }
+  const FrameOption *frame() const { return GetPointer<const FrameOption *>(20); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, 4 /* visible */) &&
+           VerifyField<uint8_t>(verifier, 6 /* tweenScale */) &&
+           VerifyField<int32_t>(verifier, 8 /* tweenRotate */) &&
+           VerifyField<float>(verifier, 10 /* tweenEasing */) &&
+           VerifyField<TransformOption>(verifier, 12 /* global */) &&
+           VerifyField<TransformOption>(verifier, 14 /* transform */) &&
+           VerifyField<PointOption>(verifier, 16 /* pivot */) &&
+           VerifyField<PointOption>(verifier, 18 /* scaleOffset */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 20 /* frame */) &&
+           verifier.VerifyTable(frame()) &&
+           verifier.EndTable();
+  }
+};
+
+struct TransformFrameOptionBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_visible(uint8_t visible) { fbb_.AddElement<uint8_t>(4, visible, 0); }
+  void add_tweenScale(uint8_t tweenScale) { fbb_.AddElement<uint8_t>(6, tweenScale, 0); }
+  void add_tweenRotate(int32_t tweenRotate) { fbb_.AddElement<int32_t>(8, tweenRotate, 0); }
+  void add_tweenEasing(float tweenEasing) { fbb_.AddElement<float>(10, tweenEasing, 0); }
+  void add_global(const TransformOption *global) { fbb_.AddStruct(12, global); }
+  void add_transform(const TransformOption *transform) { fbb_.AddStruct(14, transform); }
+  void add_pivot(const PointOption *pivot) { fbb_.AddStruct(16, pivot); }
+  void add_scaleOffset(const PointOption *scaleOffset) { fbb_.AddStruct(18, scaleOffset); }
+  void add_frame(flatbuffers::Offset<FrameOption> frame) { fbb_.AddOffset(20, frame); }
+  TransformFrameOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  TransformFrameOptionBuilder &operator=(const TransformFrameOptionBuilder &);
+  flatbuffers::Offset<TransformFrameOption> Finish() {
+    auto o = flatbuffers::Offset<TransformFrameOption>(fbb_.EndTable(start_, 9));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<TransformFrameOption> CreateTransformFrameOption(flatbuffers::FlatBufferBuilder &_fbb,
+   uint8_t visible = 0,
+   uint8_t tweenScale = 0,
+   int32_t tweenRotate = 0,
+   float tweenEasing = 0,
+   const TransformOption *global = 0,
+   const TransformOption *transform = 0,
+   const PointOption *pivot = 0,
+   const PointOption *scaleOffset = 0,
+   flatbuffers::Offset<FrameOption> frame = 0) {
+  TransformFrameOptionBuilder builder_(_fbb);
+  builder_.add_frame(frame);
+  builder_.add_scaleOffset(scaleOffset);
+  builder_.add_pivot(pivot);
+  builder_.add_transform(transform);
+  builder_.add_global(global);
+  builder_.add_tweenEasing(tweenEasing);
+  builder_.add_tweenRotate(tweenRotate);
+  builder_.add_tweenScale(tweenScale);
+  builder_.add_visible(visible);
+  return builder_.Finish();
+}
+
+struct ColorTransformOption : private flatbuffers::Table {
+  float alphaMultiplier() const { return GetField<float>(4, 0); }
+  float redMultiplier() const { return GetField<float>(6, 0); }
+  float greenMultiplier() const { return GetField<float>(8, 0); }
+  float blueMultiplier() const { return GetField<float>(10, 0); }
+  int32_t alphaOffset() const { return GetField<int32_t>(12, 0); }
+  int32_t redOffset() const { return GetField<int32_t>(14, 0); }
+  int32_t greenOffset() const { return GetField<int32_t>(16, 0); }
+  int32_t blueOffset() const { return GetField<int32_t>(18, 0); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<float>(verifier, 4 /* alphaMultiplier */) &&
+           VerifyField<float>(verifier, 6 /* redMultiplier */) &&
+           VerifyField<float>(verifier, 8 /* greenMultiplier */) &&
+           VerifyField<float>(verifier, 10 /* blueMultiplier */) &&
+           VerifyField<int32_t>(verifier, 12 /* alphaOffset */) &&
+           VerifyField<int32_t>(verifier, 14 /* redOffset */) &&
+           VerifyField<int32_t>(verifier, 16 /* greenOffset */) &&
+           VerifyField<int32_t>(verifier, 18 /* blueOffset */) &&
+           verifier.EndTable();
+  }
+};
+
+struct ColorTransformOptionBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_alphaMultiplier(float alphaMultiplier) { fbb_.AddElement<float>(4, alphaMultiplier, 0); }
+  void add_redMultiplier(float redMultiplier) { fbb_.AddElement<float>(6, redMultiplier, 0); }
+  void add_greenMultiplier(float greenMultiplier) { fbb_.AddElement<float>(8, greenMultiplier, 0); }
+  void add_blueMultiplier(float blueMultiplier) { fbb_.AddElement<float>(10, blueMultiplier, 0); }
+  void add_alphaOffset(int32_t alphaOffset) { fbb_.AddElement<int32_t>(12, alphaOffset, 0); }
+  void add_redOffset(int32_t redOffset) { fbb_.AddElement<int32_t>(14, redOffset, 0); }
+  void add_greenOffset(int32_t greenOffset) { fbb_.AddElement<int32_t>(16, greenOffset, 0); }
+  void add_blueOffset(int32_t blueOffset) { fbb_.AddElement<int32_t>(18, blueOffset, 0); }
+  ColorTransformOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  ColorTransformOptionBuilder &operator=(const ColorTransformOptionBuilder &);
+  flatbuffers::Offset<ColorTransformOption> Finish() {
+    auto o = flatbuffers::Offset<ColorTransformOption>(fbb_.EndTable(start_, 8));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ColorTransformOption> CreateColorTransformOption(flatbuffers::FlatBufferBuilder &_fbb,
+   float alphaMultiplier = 0,
+   float redMultiplier = 0,
+   float greenMultiplier = 0,
+   float blueMultiplier = 0,
+   int32_t alphaOffset = 0,
+   int32_t redOffset = 0,
+   int32_t greenOffset = 0,
+   int32_t blueOffset = 0) {
+  ColorTransformOptionBuilder builder_(_fbb);
+  builder_.add_blueOffset(blueOffset);
+  builder_.add_greenOffset(greenOffset);
+  builder_.add_redOffset(redOffset);
+  builder_.add_alphaOffset(alphaOffset);
+  builder_.add_blueMultiplier(blueMultiplier);
+  builder_.add_greenMultiplier(greenMultiplier);
+  builder_.add_redMultiplier(redMultiplier);
+  builder_.add_alphaMultiplier(alphaMultiplier);
+  return builder_.Finish();
+}
+
+struct SlotFrameOption : private flatbuffers::Table {
+  uint8_t visible() const { return GetField<uint8_t>(4, 0); }
+  float zOrder() const { return GetField<float>(6, 0); }
+  int32_t displayIndex() const { return GetField<int32_t>(8, 0); }
+  float tweenEasing() const { return GetField<float>(10, 0); }
+  const ColorTransformOption *color() const { return GetPointer<const ColorTransformOption *>(12); }
+  const FrameOption *frame() const { return GetPointer<const FrameOption *>(14); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, 4 /* visible */) &&
+           VerifyField<float>(verifier, 6 /* zOrder */) &&
+           VerifyField<int32_t>(verifier, 8 /* displayIndex */) &&
+           VerifyField<float>(verifier, 10 /* tweenEasing */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* color */) &&
+           verifier.VerifyTable(color()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* frame */) &&
+           verifier.VerifyTable(frame()) &&
+           verifier.EndTable();
+  }
+};
+
+struct SlotFrameOptionBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_visible(uint8_t visible) { fbb_.AddElement<uint8_t>(4, visible, 0); }
+  void add_zOrder(float zOrder) { fbb_.AddElement<float>(6, zOrder, 0); }
+  void add_displayIndex(int32_t displayIndex) { fbb_.AddElement<int32_t>(8, displayIndex, 0); }
+  void add_tweenEasing(float tweenEasing) { fbb_.AddElement<float>(10, tweenEasing, 0); }
+  void add_color(flatbuffers::Offset<ColorTransformOption> color) { fbb_.AddOffset(12, color); }
+  void add_frame(flatbuffers::Offset<FrameOption> frame) { fbb_.AddOffset(14, frame); }
+  SlotFrameOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  SlotFrameOptionBuilder &operator=(const SlotFrameOptionBuilder &);
+  flatbuffers::Offset<SlotFrameOption> Finish() {
+    auto o = flatbuffers::Offset<SlotFrameOption>(fbb_.EndTable(start_, 6));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<SlotFrameOption> CreateSlotFrameOption(flatbuffers::FlatBufferBuilder &_fbb,
+   uint8_t visible = 0,
+   float zOrder = 0,
+   int32_t displayIndex = 0,
+   float tweenEasing = 0,
+   flatbuffers::Offset<ColorTransformOption> color = 0,
+   flatbuffers::Offset<FrameOption> frame = 0) {
+  SlotFrameOptionBuilder builder_(_fbb);
+  builder_.add_frame(frame);
+  builder_.add_color(color);
+  builder_.add_tweenEasing(tweenEasing);
+  builder_.add_displayIndex(displayIndex);
+  builder_.add_zOrder(zOrder);
+  builder_.add_visible(visible);
+  return builder_.Finish();
+}
+
 struct TimelineOption : private flatbuffers::Table {
   int32_t duration() const { return GetField<int32_t>(4, 0); }
   float scale() const { return GetField<float>(6, 0); }
-  const flatbuffers::Vector<flatbuffers::Offset<FrameOption>> *frameList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<FrameOption>> *>(8); }
+  const flatbuffers::Vector<flatbuffers::Offset<TransformFrameOption>> *transformFrameList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<TransformFrameOption>> *>(8); }
+  const flatbuffers::Vector<flatbuffers::Offset<SlotFrameOption>> *slotFrameList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SlotFrameOption>> *>(10); }
+  const flatbuffers::Vector<flatbuffers::Offset<FrameOption>> *frameList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<FrameOption>> *>(12); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* duration */) &&
            VerifyField<float>(verifier, 6 /* scale */) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* frameList */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* transformFrameList */) &&
+           verifier.Verify(transformFrameList()) &&
+           verifier.VerifyVectorOfTables(transformFrameList()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* slotFrameList */) &&
+           verifier.Verify(slotFrameList()) &&
+           verifier.VerifyVectorOfTables(slotFrameList()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* frameList */) &&
            verifier.Verify(frameList()) &&
            verifier.VerifyVectorOfTables(frameList()) &&
            verifier.EndTable();
@@ -181,11 +379,13 @@ struct TimelineOptionBuilder {
   flatbuffers::uoffset_t start_;
   void add_duration(int32_t duration) { fbb_.AddElement<int32_t>(4, duration, 0); }
   void add_scale(float scale) { fbb_.AddElement<float>(6, scale, 0); }
-  void add_frameList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<FrameOption>>> frameList) { fbb_.AddOffset(8, frameList); }
+  void add_transformFrameList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TransformFrameOption>>> transformFrameList) { fbb_.AddOffset(8, transformFrameList); }
+  void add_slotFrameList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotFrameOption>>> slotFrameList) { fbb_.AddOffset(10, slotFrameList); }
+  void add_frameList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<FrameOption>>> frameList) { fbb_.AddOffset(12, frameList); }
   TimelineOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TimelineOptionBuilder &operator=(const TimelineOptionBuilder &);
   flatbuffers::Offset<TimelineOption> Finish() {
-    auto o = flatbuffers::Offset<TimelineOption>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<TimelineOption>(fbb_.EndTable(start_, 5));
     return o;
   }
 };
@@ -193,9 +393,13 @@ struct TimelineOptionBuilder {
 inline flatbuffers::Offset<TimelineOption> CreateTimelineOption(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t duration = 0,
    float scale = 0,
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TransformFrameOption>>> transformFrameList = 0,
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotFrameOption>>> slotFrameList = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<FrameOption>>> frameList = 0) {
   TimelineOptionBuilder builder_(_fbb);
   builder_.add_frameList(frameList);
+  builder_.add_slotFrameList(slotFrameList);
+  builder_.add_transformFrameList(transformFrameList);
   builder_.add_scale(scale);
   builder_.add_duration(duration);
   return builder_.Finish();
@@ -256,7 +460,7 @@ inline flatbuffers::Offset<TransformTimelineOption> CreateTransformTimelineOptio
   return builder_.Finish();
 }
 
-struct DisplayOption : private flatbuffers::Table {
+struct DisplayDataOption : private flatbuffers::Table {
   const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(4); }
   const flatbuffers::String *slotName() const { return GetPointer<const flatbuffers::String *>(6); }
   uint8_t type() const { return GetField<uint8_t>(8, 0); }
@@ -275,7 +479,7 @@ struct DisplayOption : private flatbuffers::Table {
   }
 };
 
-struct DisplayOptionBuilder {
+struct DisplayDataOptionBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(4, name); }
@@ -283,21 +487,21 @@ struct DisplayOptionBuilder {
   void add_type(uint8_t type) { fbb_.AddElement<uint8_t>(8, type, 0); }
   void add_transform(const TransformOption *transform) { fbb_.AddStruct(10, transform); }
   void add_pivot(const PointOption *pivot) { fbb_.AddStruct(12, pivot); }
-  DisplayOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
-  DisplayOptionBuilder &operator=(const DisplayOptionBuilder &);
-  flatbuffers::Offset<DisplayOption> Finish() {
-    auto o = flatbuffers::Offset<DisplayOption>(fbb_.EndTable(start_, 5));
+  DisplayDataOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  DisplayDataOptionBuilder &operator=(const DisplayDataOptionBuilder &);
+  flatbuffers::Offset<DisplayDataOption> Finish() {
+    auto o = flatbuffers::Offset<DisplayDataOption>(fbb_.EndTable(start_, 5));
     return o;
   }
 };
 
-inline flatbuffers::Offset<DisplayOption> CreateDisplayOption(flatbuffers::FlatBufferBuilder &_fbb,
+inline flatbuffers::Offset<DisplayDataOption> CreateDisplayDataOption(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<flatbuffers::String> name = 0,
    flatbuffers::Offset<flatbuffers::String> slotName = 0,
    uint8_t type = 0,
    const TransformOption *transform = 0,
    const PointOption *pivot = 0) {
-  DisplayOptionBuilder builder_(_fbb);
+  DisplayDataOptionBuilder builder_(_fbb);
   builder_.add_pivot(pivot);
   builder_.add_transform(transform);
   builder_.add_slotName(slotName);
@@ -417,7 +621,7 @@ struct SlotDataOption : private flatbuffers::Table {
   const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(8); }
   const flatbuffers::String *parent() const { return GetPointer<const flatbuffers::String *>(10); }
   uint8_t blendMode() const { return GetField<uint8_t>(12, 0); }
-  const flatbuffers::Vector<flatbuffers::Offset<DisplayOption>> *displays() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<DisplayOption>> *>(14); }
+  const flatbuffers::Vector<flatbuffers::Offset<DisplayDataOption>> *displayDataList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<DisplayDataOption>> *>(14); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* displayIndex */) &&
@@ -427,9 +631,9 @@ struct SlotDataOption : private flatbuffers::Table {
            VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* parent */) &&
            verifier.Verify(parent()) &&
            VerifyField<uint8_t>(verifier, 12 /* blendMode */) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* displays */) &&
-           verifier.Verify(displays()) &&
-           verifier.VerifyVectorOfTables(displays()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* displayDataList */) &&
+           verifier.Verify(displayDataList()) &&
+           verifier.VerifyVectorOfTables(displayDataList()) &&
            verifier.EndTable();
   }
 };
@@ -442,7 +646,7 @@ struct SlotDataOptionBuilder {
   void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(8, name); }
   void add_parent(flatbuffers::Offset<flatbuffers::String> parent) { fbb_.AddOffset(10, parent); }
   void add_blendMode(uint8_t blendMode) { fbb_.AddElement<uint8_t>(12, blendMode, 0); }
-  void add_displays(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<DisplayOption>>> displays) { fbb_.AddOffset(14, displays); }
+  void add_displayDataList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<DisplayDataOption>>> displayDataList) { fbb_.AddOffset(14, displayDataList); }
   SlotDataOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   SlotDataOptionBuilder &operator=(const SlotDataOptionBuilder &);
   flatbuffers::Offset<SlotDataOption> Finish() {
@@ -457,9 +661,9 @@ inline flatbuffers::Offset<SlotDataOption> CreateSlotDataOption(flatbuffers::Fla
    flatbuffers::Offset<flatbuffers::String> name = 0,
    flatbuffers::Offset<flatbuffers::String> parent = 0,
    uint8_t blendMode = 0,
-   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<DisplayOption>>> displays = 0) {
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<DisplayDataOption>>> displayDataList = 0) {
   SlotDataOptionBuilder builder_(_fbb);
-  builder_.add_displays(displays);
+  builder_.add_displayDataList(displayDataList);
   builder_.add_parent(parent);
   builder_.add_name(name);
   builder_.add_zOrder(zOrder);
@@ -470,14 +674,14 @@ inline flatbuffers::Offset<SlotDataOption> CreateSlotDataOption(flatbuffers::Fla
 
 struct SkinDataOption : private flatbuffers::Table {
   const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(4); }
-  const flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>> *slots() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>> *>(6); }
+  const flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>> *slotDataList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>> *>(6); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* name */) &&
            verifier.Verify(name()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* slots */) &&
-           verifier.Verify(slots()) &&
-           verifier.VerifyVectorOfTables(slots()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* slotDataList */) &&
+           verifier.Verify(slotDataList()) &&
+           verifier.VerifyVectorOfTables(slotDataList()) &&
            verifier.EndTable();
   }
 };
@@ -486,7 +690,7 @@ struct SkinDataOptionBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(4, name); }
-  void add_slots(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>>> slots) { fbb_.AddOffset(6, slots); }
+  void add_slotDataList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>>> slotDataList) { fbb_.AddOffset(6, slotDataList); }
   SkinDataOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   SkinDataOptionBuilder &operator=(const SkinDataOptionBuilder &);
   flatbuffers::Offset<SkinDataOption> Finish() {
@@ -497,9 +701,9 @@ struct SkinDataOptionBuilder {
 
 inline flatbuffers::Offset<SkinDataOption> CreateSkinDataOption(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<flatbuffers::String> name = 0,
-   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>>> slots = 0) {
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>>> slotDataList = 0) {
   SkinDataOptionBuilder builder_(_fbb);
-  builder_.add_slots(slots);
+  builder_.add_slotDataList(slotDataList);
   builder_.add_name(name);
   return builder_.Finish();
 }
@@ -512,9 +716,10 @@ struct AnimationDataOption : private flatbuffers::Table {
   float tweenEasing() const { return GetField<float>(12, 0); }
   uint8_t autoTween() const { return GetField<uint8_t>(14, 0); }
   int32_t lastFrameDuration() const { return GetField<int32_t>(16, 0); }
-  const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *hideTimelineList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(18); }
-  const flatbuffers::Vector<flatbuffers::Offset<TransformTimelineOption>> *timelineList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<TransformTimelineOption>> *>(20); }
-  const flatbuffers::Vector<flatbuffers::Offset<SlotTimelineOption>> *slotTimelineList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SlotTimelineOption>> *>(22); }
+  const TimelineOption *timeline() const { return GetPointer<const TimelineOption *>(18); }
+  const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *hideTimelineList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(20); }
+  const flatbuffers::Vector<flatbuffers::Offset<TransformTimelineOption>> *timelineList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<TransformTimelineOption>> *>(22); }
+  const flatbuffers::Vector<flatbuffers::Offset<SlotTimelineOption>> *slotTimelineList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SlotTimelineOption>> *>(24); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* name */) &&
@@ -525,13 +730,15 @@ struct AnimationDataOption : private flatbuffers::Table {
            VerifyField<float>(verifier, 12 /* tweenEasing */) &&
            VerifyField<uint8_t>(verifier, 14 /* autoTween */) &&
            VerifyField<int32_t>(verifier, 16 /* lastFrameDuration */) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 18 /* hideTimelineList */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 18 /* timeline */) &&
+           verifier.VerifyTable(timeline()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 20 /* hideTimelineList */) &&
            verifier.Verify(hideTimelineList()) &&
            verifier.VerifyVectorOfStrings(hideTimelineList()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 20 /* timelineList */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 22 /* timelineList */) &&
            verifier.Verify(timelineList()) &&
            verifier.VerifyVectorOfTables(timelineList()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 22 /* slotTimelineList */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 24 /* slotTimelineList */) &&
            verifier.Verify(slotTimelineList()) &&
            verifier.VerifyVectorOfTables(slotTimelineList()) &&
            verifier.EndTable();
@@ -548,13 +755,14 @@ struct AnimationDataOptionBuilder {
   void add_tweenEasing(float tweenEasing) { fbb_.AddElement<float>(12, tweenEasing, 0); }
   void add_autoTween(uint8_t autoTween) { fbb_.AddElement<uint8_t>(14, autoTween, 0); }
   void add_lastFrameDuration(int32_t lastFrameDuration) { fbb_.AddElement<int32_t>(16, lastFrameDuration, 0); }
-  void add_hideTimelineList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> hideTimelineList) { fbb_.AddOffset(18, hideTimelineList); }
-  void add_timelineList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TransformTimelineOption>>> timelineList) { fbb_.AddOffset(20, timelineList); }
-  void add_slotTimelineList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotTimelineOption>>> slotTimelineList) { fbb_.AddOffset(22, slotTimelineList); }
+  void add_timeline(flatbuffers::Offset<TimelineOption> timeline) { fbb_.AddOffset(18, timeline); }
+  void add_hideTimelineList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> hideTimelineList) { fbb_.AddOffset(20, hideTimelineList); }
+  void add_timelineList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TransformTimelineOption>>> timelineList) { fbb_.AddOffset(22, timelineList); }
+  void add_slotTimelineList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotTimelineOption>>> slotTimelineList) { fbb_.AddOffset(24, slotTimelineList); }
   AnimationDataOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   AnimationDataOptionBuilder &operator=(const AnimationDataOptionBuilder &);
   flatbuffers::Offset<AnimationDataOption> Finish() {
-    auto o = flatbuffers::Offset<AnimationDataOption>(fbb_.EndTable(start_, 10));
+    auto o = flatbuffers::Offset<AnimationDataOption>(fbb_.EndTable(start_, 11));
     return o;
   }
 };
@@ -567,6 +775,7 @@ inline flatbuffers::Offset<AnimationDataOption> CreateAnimationDataOption(flatbu
    float tweenEasing = 0,
    uint8_t autoTween = 0,
    int32_t lastFrameDuration = 0,
+   flatbuffers::Offset<TimelineOption> timeline = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> hideTimelineList = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TransformTimelineOption>>> timelineList = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotTimelineOption>>> slotTimelineList = 0) {
@@ -574,6 +783,7 @@ inline flatbuffers::Offset<AnimationDataOption> CreateAnimationDataOption(flatbu
   builder_.add_slotTimelineList(slotTimelineList);
   builder_.add_timelineList(timelineList);
   builder_.add_hideTimelineList(hideTimelineList);
+  builder_.add_timeline(timeline);
   builder_.add_lastFrameDuration(lastFrameDuration);
   builder_.add_tweenEasing(tweenEasing);
   builder_.add_playTimes(playTimes);
@@ -589,7 +799,7 @@ struct ArmatureOption : private flatbuffers::Table {
   const flatbuffers::Vector<flatbuffers::Offset<BoneDataOption>> *boneDataList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<BoneDataOption>> *>(6); }
   const flatbuffers::Vector<flatbuffers::Offset<SkinDataOption>> *skinDataList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SkinDataOption>> *>(8); }
   const flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>> *slotDataList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>> *>(10); }
-  const flatbuffers::Vector<flatbuffers::Offset<AnimationDataOption>> *animationData() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<AnimationDataOption>> *>(12); }
+  const flatbuffers::Vector<flatbuffers::Offset<AnimationDataOption>> *animationDataList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<AnimationDataOption>> *>(12); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* name */) &&
@@ -603,9 +813,9 @@ struct ArmatureOption : private flatbuffers::Table {
            VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* slotDataList */) &&
            verifier.Verify(slotDataList()) &&
            verifier.VerifyVectorOfTables(slotDataList()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* animationData */) &&
-           verifier.Verify(animationData()) &&
-           verifier.VerifyVectorOfTables(animationData()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* animationDataList */) &&
+           verifier.Verify(animationDataList()) &&
+           verifier.VerifyVectorOfTables(animationDataList()) &&
            verifier.EndTable();
   }
 };
@@ -617,7 +827,7 @@ struct ArmatureOptionBuilder {
   void add_boneDataList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<BoneDataOption>>> boneDataList) { fbb_.AddOffset(6, boneDataList); }
   void add_skinDataList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SkinDataOption>>> skinDataList) { fbb_.AddOffset(8, skinDataList); }
   void add_slotDataList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>>> slotDataList) { fbb_.AddOffset(10, slotDataList); }
-  void add_animationData(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationDataOption>>> animationData) { fbb_.AddOffset(12, animationData); }
+  void add_animationDataList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationDataOption>>> animationDataList) { fbb_.AddOffset(12, animationDataList); }
   ArmatureOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ArmatureOptionBuilder &operator=(const ArmatureOptionBuilder &);
   flatbuffers::Offset<ArmatureOption> Finish() {
@@ -631,9 +841,9 @@ inline flatbuffers::Offset<ArmatureOption> CreateArmatureOption(flatbuffers::Fla
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<BoneDataOption>>> boneDataList = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SkinDataOption>>> skinDataList = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SlotDataOption>>> slotDataList = 0,
-   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationDataOption>>> animationData = 0) {
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationDataOption>>> animationDataList = 0) {
   ArmatureOptionBuilder builder_(_fbb);
-  builder_.add_animationData(animationData);
+  builder_.add_animationDataList(animationDataList);
   builder_.add_slotDataList(slotDataList);
   builder_.add_skinDataList(skinDataList);
   builder_.add_boneDataList(boneDataList);
@@ -641,57 +851,63 @@ inline flatbuffers::Offset<ArmatureOption> CreateArmatureOption(flatbuffers::Fla
   return builder_.Finish();
 }
 
-struct DragonBones : private flatbuffers::Table {
+struct DragonBonesParseBinary : private flatbuffers::Table {
   const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(4); }
   uint8_t autoSearch() const { return GetField<uint8_t>(6, 0); }
   uint8_t isGlobalData() const { return GetField<uint8_t>(8, 0); }
-  const flatbuffers::Vector<flatbuffers::Offset<ArmatureOption>> *armatures() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<ArmatureOption>> *>(10); }
+  const flatbuffers::String *version() const { return GetPointer<const flatbuffers::String *>(10); }
+  const flatbuffers::Vector<flatbuffers::Offset<ArmatureOption>> *armatures() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<ArmatureOption>> *>(12); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* name */) &&
            verifier.Verify(name()) &&
            VerifyField<uint8_t>(verifier, 6 /* autoSearch */) &&
            VerifyField<uint8_t>(verifier, 8 /* isGlobalData */) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* armatures */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* version */) &&
+           verifier.Verify(version()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* armatures */) &&
            verifier.Verify(armatures()) &&
            verifier.VerifyVectorOfTables(armatures()) &&
            verifier.EndTable();
   }
 };
 
-struct DragonBonesBuilder {
+struct DragonBonesParseBinaryBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(4, name); }
   void add_autoSearch(uint8_t autoSearch) { fbb_.AddElement<uint8_t>(6, autoSearch, 0); }
   void add_isGlobalData(uint8_t isGlobalData) { fbb_.AddElement<uint8_t>(8, isGlobalData, 0); }
-  void add_armatures(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<ArmatureOption>>> armatures) { fbb_.AddOffset(10, armatures); }
-  DragonBonesBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
-  DragonBonesBuilder &operator=(const DragonBonesBuilder &);
-  flatbuffers::Offset<DragonBones> Finish() {
-    auto o = flatbuffers::Offset<DragonBones>(fbb_.EndTable(start_, 4));
+  void add_version(flatbuffers::Offset<flatbuffers::String> version) { fbb_.AddOffset(10, version); }
+  void add_armatures(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<ArmatureOption>>> armatures) { fbb_.AddOffset(12, armatures); }
+  DragonBonesParseBinaryBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  DragonBonesParseBinaryBuilder &operator=(const DragonBonesParseBinaryBuilder &);
+  flatbuffers::Offset<DragonBonesParseBinary> Finish() {
+    auto o = flatbuffers::Offset<DragonBonesParseBinary>(fbb_.EndTable(start_, 5));
     return o;
   }
 };
 
-inline flatbuffers::Offset<DragonBones> CreateDragonBones(flatbuffers::FlatBufferBuilder &_fbb,
+inline flatbuffers::Offset<DragonBonesParseBinary> CreateDragonBonesParseBinary(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<flatbuffers::String> name = 0,
    uint8_t autoSearch = 0,
    uint8_t isGlobalData = 0,
+   flatbuffers::Offset<flatbuffers::String> version = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<ArmatureOption>>> armatures = 0) {
-  DragonBonesBuilder builder_(_fbb);
+  DragonBonesParseBinaryBuilder builder_(_fbb);
   builder_.add_armatures(armatures);
+  builder_.add_version(version);
   builder_.add_name(name);
   builder_.add_isGlobalData(isGlobalData);
   builder_.add_autoSearch(autoSearch);
   return builder_.Finish();
 }
 
-inline const DragonBones *GetDragonBones(const void *buf) { return flatbuffers::GetRoot<DragonBones>(buf); }
+inline const DragonBonesParseBinary *GetDragonBonesParseBinary(const void *buf) { return flatbuffers::GetRoot<DragonBonesParseBinary>(buf); }
 
-inline bool VerifyDragonBonesBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<DragonBones>(); }
+inline bool VerifyDragonBonesParseBinaryBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<DragonBonesParseBinary>(); }
 
-inline void FinishDragonBonesBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<DragonBones> root) { fbb.Finish(root); }
+inline void FinishDragonBonesParseBinaryBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<DragonBonesParseBinary> root) { fbb.Finish(root); }
 
 }  // namespace dragonBones
 

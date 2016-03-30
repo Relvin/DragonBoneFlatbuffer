@@ -33,9 +33,45 @@ table FrameOption {
   curve: CurveDataOption;
 }
 
+table TransformFrameOption {
+  visible: bool;
+  tweenScale: bool;
+  tweenRotate: int;
+  tweenEasing: float;
+    
+  global: TransformOption;
+  transform: TransformOption;
+  pivot: PointOption;
+  scaleOffset: PointOption;
+  frame: FrameOption;
+}
+
+table ColorTransformOption {
+  alphaMultiplier: float;
+  redMultiplier: float;
+  greenMultiplier: float;
+  blueMultiplier: float;
+    
+  alphaOffset: int;
+  redOffset: int;
+  greenOffset: int;
+  blueOffset: int;
+}
+
+table SlotFrameOption {
+  visible: bool;
+  zOrder: float;
+  displayIndex: int;
+  tweenEasing: float;
+  color: ColorTransformOption;
+  frame: FrameOption;
+}
+
 table TimelineOption {
   duration: int;
   scale: float;
+  transformFrameList: [TransformFrameOption];
+  slotFrameList: [SlotFrameOption];
   frameList: [FrameOption];
 }
 
@@ -48,7 +84,7 @@ table TransformTimelineOption {
   timeline : TimelineOption;
 }
 
-table DisplayOption {
+table DisplayDataOption {
   name: string;
   slotName: string;
   type: ubyte;
@@ -60,7 +96,6 @@ table SlotTimelineOption {
   name: string;
   transformed: bool;
   offset: float;
-
   timeline : TimelineOption;
 }
 
@@ -81,12 +116,12 @@ table SlotDataOption {
   name: string;
   parent: string;
   blendMode: ubyte;
-  displays: [DisplayOption];
+  displayDataList: [DisplayDataOption];
 }
 
 table SkinDataOption {
   name: string;
-  slots: [SlotDataOption];
+  slotDataList: [SlotDataOption];
 }
 
 table AnimationDataOption {
@@ -97,7 +132,7 @@ table AnimationDataOption {
   tweenEasing: float;
   autoTween: bool;
   lastFrameDuration: int;
-
+  timeline: TimelineOption;
   hideTimelineList: [string];
   timelineList: [TransformTimelineOption];
   slotTimelineList: [SlotTimelineOption];
@@ -108,14 +143,15 @@ table ArmatureOption{
   boneDataList: [BoneDataOption];
   skinDataList: [SkinDataOption];
   slotDataList: [SlotDataOption];
-  animationData: [AnimationDataOption];
+  animationDataList: [AnimationDataOption];
 }
 
-table DragonBones {
+table DragonBonesParseBinary {
   name: string;
   autoSearch: bool;
   isGlobalData: bool;
+  version: string;
   armatures: [ArmatureOption];
 }
 
-root_type DragonBones;
+root_type DragonBonesParseBinary;

@@ -15,7 +15,19 @@
 #else
 #include <unistd.h>
 #endif
-void test()
+void testRead()
+{
+    
+    std::string filename = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/Dragon.xmlb";
+    filename += "";
+    
+    std::string outpath = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/";
+    xmlToBinary::getInstance()->readFileAndConverToBinary(filename, outpath);
+    
+    std::cout << " ===>SUCCESS!<===\n";
+}
+
+void testWrite()
 {
     
     std::string filename = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/Dragon.xml";
@@ -29,8 +41,9 @@ void test()
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    
-    test();
+//    
+//    testWrite();
+//    testRead();
     
     return 0;
     std::string extFilePath = "";
