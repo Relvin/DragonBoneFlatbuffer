@@ -22,6 +22,10 @@
 		AD92402C1CA50D4B0065F186 /* idl_gen_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240241CA50D4B0065F186 /* idl_gen_text.cpp */; };
 		AD92402D1CA50D4B0065F186 /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240251CA50D4B0065F186 /* idl_parser.cpp */; };
 		AD9240551CA50E550065F186 /* dbtinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9240531CA50E550065F186 /* dbtinyxml2.cpp */; };
+		ADB106141CE458CD00135953 /* FFDFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADB1060C1CE458CD00135953 /* FFDFrame.cpp */; };
+		ADB106151CE458CD00135953 /* FFDTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADB1060E1CE458CD00135953 /* FFDTimeline.cpp */; };
+		ADB106161CE458CD00135953 /* IKData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADB106101CE458CD00135953 /* IKData.cpp */; };
+		ADB106171CE458CD00135953 /* MeshData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADB106121CE458CD00135953 /* MeshData.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -116,6 +120,14 @@
 		AD9240531CA50E550065F186 /* dbtinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbtinyxml2.cpp; sourceTree = "<group>"; };
 		AD9240541CA50E550065F186 /* dbtinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbtinyxml2.h; sourceTree = "<group>"; };
 		ADA71B0A1C1029F500D1C1BD /* xmlToBinary */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xmlToBinary; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADB1060C1CE458CD00135953 /* FFDFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFDFrame.cpp; path = ../../classes/objects/FFDFrame.cpp; sourceTree = "<group>"; };
+		ADB1060D1CE458CD00135953 /* FFDFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFDFrame.h; path = ../../classes/objects/FFDFrame.h; sourceTree = "<group>"; };
+		ADB1060E1CE458CD00135953 /* FFDTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFDTimeline.cpp; path = ../../classes/objects/FFDTimeline.cpp; sourceTree = "<group>"; };
+		ADB1060F1CE458CD00135953 /* FFDTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFDTimeline.h; path = ../../classes/objects/FFDTimeline.h; sourceTree = "<group>"; };
+		ADB106101CE458CD00135953 /* IKData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IKData.cpp; path = ../../classes/objects/IKData.cpp; sourceTree = "<group>"; };
+		ADB106111CE458CD00135953 /* IKData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IKData.h; path = ../../classes/objects/IKData.h; sourceTree = "<group>"; };
+		ADB106121CE458CD00135953 /* MeshData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshData.cpp; path = ../../classes/objects/MeshData.cpp; sourceTree = "<group>"; };
+		ADB106131CE458CD00135953 /* MeshData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshData.h; path = ../../classes/objects/MeshData.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +175,14 @@
 		AD923FD71CA50BD20065F186 /* objects */ = {
 			isa = PBXGroup;
 			children = (
+				ADB1060C1CE458CD00135953 /* FFDFrame.cpp */,
+				ADB1060D1CE458CD00135953 /* FFDFrame.h */,
+				ADB1060E1CE458CD00135953 /* FFDTimeline.cpp */,
+				ADB1060F1CE458CD00135953 /* FFDTimeline.h */,
+				ADB106101CE458CD00135953 /* IKData.cpp */,
+				ADB106111CE458CD00135953 /* IKData.h */,
+				ADB106121CE458CD00135953 /* MeshData.cpp */,
+				ADB106131CE458CD00135953 /* MeshData.h */,
 				AD923FD81CA50BD20065F186 /* AnimationData.h */,
 				AD923FD91CA50BD20065F186 /* ArmatureData.h */,
 				AD923FDA1CA50BD20065F186 /* BoneData.h */,
@@ -392,11 +412,15 @@
 				AD92402D1CA50D4B0065F186 /* idl_parser.cpp in Sources */,
 				AD92400D1CA50BD20065F186 /* XMLDataParser.cpp in Sources */,
 				AD70DD991CAA242C002F6DE2 /* BinaryParser.cpp in Sources */,
+				ADB106171CE458CD00135953 /* MeshData.cpp in Sources */,
+				ADB106141CE458CD00135953 /* FFDFrame.cpp in Sources */,
 				AD92402B1CA50D4B0065F186 /* idl_gen_go.cpp in Sources */,
 				AD92402A1CA50D4B0065F186 /* idl_gen_general.cpp in Sources */,
 				AD92400B1CA50BD20065F186 /* ConstValues.cpp in Sources */,
 				AD9240281CA50D4B0065F186 /* idl_gen_cpp.cpp in Sources */,
+				ADB106161CE458CD00135953 /* IKData.cpp in Sources */,
 				AD9240291CA50D4B0065F186 /* idl_gen_fbs.cpp in Sources */,
+				ADB106151CE458CD00135953 /* FFDTimeline.cpp in Sources */,
 				AD9240551CA50E550065F186 /* dbtinyxml2.cpp in Sources */,
 				AD92400E1CA50BD20065F186 /* Platform.cpp in Sources */,
 			);

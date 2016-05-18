@@ -11,6 +11,7 @@ public:
     static const std::string ARMATURE;
     static const std::string SKIN;
     static const std::string BONE;
+    static const std::string IK;
     static const std::string SLOT;
     static const std::string DISPLAY;
     static const std::string ANIMATION;
@@ -23,6 +24,13 @@ public:
     static const std::string TEXT;
     static const std::string COLOR;
     static const std::string SCALING_GRID;
+    static const std::string MESH;
+    static const std::string FFD;
+    static const std::string EDGES;
+    static const std::string VERTICES;
+    static const std::string TRIANGLES;
+    static const std::string UVS;
+    
     
     static const std::string TEXTURE_ATLAS;
     static const std::string SUB_TEXTURE;
@@ -108,6 +116,11 @@ public:
     static const std::string A_SCALE_X_OFFSET;
     static const std::string A_SCALE_Y_OFFSET;
 	static const std::string A_CURVE;
+    static const std::string A_TARGET;
+    static const std::string A_WEIGHT;
+    static const std::string A_BONES;
+    static const std::string A_BENDPOSITIVE;
+    static const std::string A_CHAIN;
     
 private:
     DRAGON_BONES_DISALLOW_COPY_AND_ASSIGN(ConstValues);

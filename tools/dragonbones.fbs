@@ -16,10 +16,17 @@ struct TransformOption {
   scaleY:float;
 }
 
+table IKDataOption {
+  name: string;
+  target: string;
+  bone: string;
+  chain: float;
+  weight: float;
+  bendPositive: bool;
+}
+
 table CurveDataOption {
-  dataChanged: bool;
   pointList: [PointOption];
-  sampling: [PointOption];
 }
 
 table FrameOption {
@@ -67,11 +74,19 @@ table SlotFrameOption {
   frame: FrameOption;
 }
 
+table FFDFrameOption {
+  tweenEasing: float;
+  offset: float;
+  vertices: [float];
+  frame: FrameOption;
+}
+
 table TimelineOption {
   duration: int;
   scale: float;
   transformFrameList: [TransformFrameOption];
   slotFrameList: [SlotFrameOption];
+  ffdFrameList: [FFDFrameOption];
   frameList: [FrameOption];
 }
 
@@ -92,9 +107,27 @@ table DisplayDataOption {
   pivot: PointOption;
 }
 
+table MeshDataOption {
+  width: float;
+  height: float;
+  triangles: [int];
+  vectices: [PointOption];
+  uvs: [PointOption];
+  displayData: DisplayDataOption;
+
+}
+
 table SlotTimelineOption {
   name: string;
   transformed: bool;
+  offset: float;
+  timeline : TimelineOption;
+}
+
+table FFDTimelineOption {
+  name: string;
+  skinName: string;
+  slotName: string;
   offset: float;
   timeline : TimelineOption;
 }
@@ -117,6 +150,7 @@ table SlotDataOption {
   parent: string;
   blendMode: ubyte;
   displayDataList: [DisplayDataOption];
+  meshDataList: [MeshDataOption];
 }
 
 table SkinDataOption {
@@ -136,6 +170,7 @@ table AnimationDataOption {
   hideTimelineList: [string];
   timelineList: [TransformTimelineOption];
   slotTimelineList: [SlotTimelineOption];
+  ffdTimelineList: [FFDTimelineOption];
 }
 
 table ArmatureOption{
@@ -143,6 +178,7 @@ table ArmatureOption{
   boneDataList: [BoneDataOption];
   skinDataList: [SkinDataOption];
   slotDataList: [SlotDataOption];
+  ikDataList: [IKDataOption];
   animationDataList: [AnimationDataOption];
 }
 

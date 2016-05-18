@@ -10,6 +10,7 @@
 #define BinaryParser_hpp
 
 #include "DragonBones.h"
+#include "geoms/Point.h"
 
 namespace flatbuffers {
     struct String;
@@ -21,6 +22,7 @@ NAME_SPACE_DRAGON_BONES_BEGIN
 struct PointOption;
 struct TransformOption;
 struct CurveDataOption;
+struct IKDataOption;
 struct FrameOption;
 struct TransformFrameOption;
 struct ColorTransformOption;
@@ -28,7 +30,10 @@ struct SlotFrameOption;
 struct TimelineOption;
 struct TransformTimelineOption;
 struct DisplayDataOption;
+struct MeshDataOption;
 struct SlotTimelineOption;
+struct FFDTimelineOption;
+struct FFDFrameOption;
 struct BoneDataOption;
 struct SlotDataOption;
 struct SkinDataOption;
@@ -47,13 +52,17 @@ class TransformTimeline;
 class Transform;
 class SkinData;
 class SlotData;
+class IKData;
 class DisplayData;
 class SlotTimeline;
+class FFDTimeline;
 class SlotFrame;
 class Frame;
 class Timeline;
-class Point;
 class ColorTransform;
+class FFDFrame;
+class MeshData;
+
 
 class BinaryParser
 {
@@ -69,12 +78,20 @@ protected:
     ArmatureData* parseArmatureDataFromBinary(const ArmatureOption * armatureOption) const;
     BoneData* parseBoneDataFromBinary(const BoneDataOption* boneDataOption) const;
     SlotData* parseSlotDataFromBinary(const SlotDataOption* slotDataOption) const;
-    DisplayData* parseDisplayDataFromBinary(const DisplayDataOption* displayDataOption) const;
+    
+    MeshData* parseMeshDataFromBinary(const MeshDataOption* meshDataOption) const;
+    DisplayData* parseMainDisplayDataFromBinary(const DisplayDataOption* displayDataOption) const;
+    void parseDisplayDataFromBinary(DisplayData *displayData,const DisplayDataOption* displayDataOption) const;
+    
     SkinData* parseSkinDataFromBinary(const SkinDataOption* skinDataOption) const;
+    IKData* parseIKDataFromBinary(const IKDataOption* ikDataOption) const;
     AnimationData* parseAnimationDataFromBinary(const AnimationDataOption *animationDataOption) const;
     
     TransformTimeline* parseTransformTimelineFromBinary(const TransformTimelineOption *timelineOption) const;
     SlotTimeline* parseSlotTimelineFromBinary(const SlotTimelineOption *timelineOption) const;
+    
+    FFDTimeline* parseFFDTimelineFromBinary(const FFDTimelineOption *timelineOption) const;
+    FFDFrame* parseFFDFrameFromBinary(const FFDFrameOption *ffdFrameOption) const;
     
     Frame* parseMainFrameFromBinary(const FrameOption *frameOption) const;
 

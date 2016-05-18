@@ -42,7 +42,7 @@ void testWrite()
 int main(int argc, const char * argv[]) {
     // insert code here...
 //    
-//    testWrite();
+    testWrite();
 //    testRead();
     
     return 0;
