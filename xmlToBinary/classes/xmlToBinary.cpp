@@ -222,10 +222,9 @@ bool xmlToBinary::convertSkinData(flatbuffers::FlatBufferBuilder &builder,dragon
         convertSlotData(builder,skinData->slotDataList.at(slotIdx), slotDataOptionList);
     }
     
-    auto skinName = builder.CreateString(skinData->name);
     skinDataOptionList.push_back(
                                  CreateSkinDataOption(builder,
-                                                      skinData->name.length() == 0 ? 0 : skinName,
+                                                      skinData->name.length() == 0 ? 0 : builder.CreateString(skinData->name),
                                                       slotDataOptionList.size() == 0 ? 0 : builder.CreateVector(slotDataOptionList)));
     return true;
 }
@@ -235,9 +234,8 @@ bool xmlToBinary::convertSlotData(flatbuffers::FlatBufferBuilder &builder,SlotDa
     
     
     std::vector<flatbuffers::Offset<DisplayDataOption>> displayDataList;
-    std::vector<flatbuffers::Offset<MeshDataOption>> meshDataList;
-
     
+    std::vector<flatbuffers::Offset<MeshDataOption>> meshDataList;
     for (int disIdx = 0; disIdx < slotData->displayDataList.size(); disIdx++)
     {
         DisplayData* displayData = slotData->displayDataList.at(disIdx);
@@ -293,18 +291,19 @@ bool xmlToBinary::convertMeshData(flatbuffers::FlatBufferBuilder &builder,MeshDa
     float width = meshData->getWidth();
     float height = meshData->getHeight();
     
-    std::vector<const PointOption *> vectices;
-    for (Point vectice : meshData->getVectices())
+    std::vector<flatbuffers::Offset<Vec2Option>> vectices;
+    for (Point vectice : meshData->_orgVectices)
     {
-        PointOption vecticeOption(vectice.x,vectice.y);
-        vectices.push_back(&vecticeOption);
+        auto vec2Option = CreateVec2Option(builder,vectice.x,vectice.y);
+        vectices.push_back(vec2Option);
         
     }
-    std::vector<const PointOption *> uvs;
-    for (Point uv : meshData->getUVs())
+    
+    std::vector<flatbuffers::Offset<Vec2Option>> uvs;
+    for (Point uv : meshData->_UVs)
     {
-        PointOption uvOption(uv.x,uv.y);
-        uvs.push_back(&uvOption);
+        auto vec2Option = CreateVec2Option(builder,uv.x,uv.y);
+        uvs.push_back(vec2Option);
         
     }
     auto dispLayDataOption = convertDisplayData(builder, meshData);
@@ -316,7 +315,7 @@ bool xmlToBinary::convertMeshData(flatbuffers::FlatBufferBuilder &builder,MeshDa
                                                uvs.size() > 0 ? builder.CreateVector(uvs) : 0,
                                                dispLayDataOption
                                                );
-    
+
     MeshDataOptionList.push_back(meshDataOption);
     return true;
 }
@@ -580,14 +579,14 @@ flatbuffers::Offset<FrameOption> xmlToBinary::convertFrameData(flatbuffers::Flat
     std::string event = frame->event;
     std::string sound = frame->sound;
     
-    std::vector<const PointOption *> pointOptionList;
+    std::vector<flatbuffers::Offset<Vec2Option>> pointOptionList;
     if (frame->curve)
     {
         for (size_t samIdx = 0; samIdx < frame->curve->_pointList.size();samIdx ++)
         {
             dragonBones::Point point = frame->curve->_pointList[samIdx];
-            PointOption pointOption(point.x,point.y);
-            pointOptionList.push_back(&pointOption);
+            auto pointOption = CreateVec2Option(builder,point.x,point.y);
+            pointOptionList.push_back(pointOption);
         }
         
     }

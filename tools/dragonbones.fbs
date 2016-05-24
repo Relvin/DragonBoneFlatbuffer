@@ -16,6 +16,11 @@ struct TransformOption {
   scaleY:float;
 }
 
+table Vec2Option {
+  x:float;
+  y:float;
+}
+
 table IKDataOption {
   name: string;
   target: string;
@@ -26,7 +31,7 @@ table IKDataOption {
 }
 
 table CurveDataOption {
-  pointList: [PointOption];
+  pointList: [Vec2Option];
 }
 
 table FrameOption {
@@ -111,8 +116,8 @@ table MeshDataOption {
   width: float;
   height: float;
   triangles: [int];
-  vectices: [PointOption];
-  uvs: [PointOption];
+  vectices: [Vec2Option];
+  uvs: [Vec2Option];
   displayData: DisplayDataOption;
 
 }

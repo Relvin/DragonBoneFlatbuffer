@@ -18,10 +18,10 @@
 void testRead()
 {
     
-    std::string filename = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/Dragon.xmlb";
+    std::string filename = "/Users/relvin/Desktop/Ubbie/Ubbie.xmlb";
     filename += "";
     
-    std::string outpath = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/";
+    std::string outpath = "/Users/relvin/Desktop/Ubbie/";
     xmlToBinary::getInstance()->readFileAndConverToBinary(filename, outpath);
     
     std::cout << " ===>SUCCESS!<===\n";
@@ -30,10 +30,10 @@ void testRead()
 void testWrite()
 {
     
-    std::string filename = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/Dragon.xml";
+    std::string filename = "/Users/relvin/Desktop/Ubbie/Ubbie.xml";
     filename += "";
     
-    std::string outpath = "/Users/dengqinghong/Documents/workspace/Resource/res/dragon/";
+    std::string outpath = "/Users/relvin/Desktop/Ubbie/";
     xmlToBinary::getInstance()->readFileAndConverToBinary(filename, outpath);
     
     std::cout << " ===>SUCCESS!<===\n";

@@ -12,10 +12,10 @@ public:
 		x(0.f)
 		,y(0.f)
     {}
-	Point(float x, float y)
+	Point(float xx, float yy)
 	{
-		x = x;
-		y = y;
+		x = xx;
+		y = yy;
 	}
     Point(const Point &copyData)
     {

@@ -74,17 +74,17 @@ void MeshData::resetVisitData()
     }
 }
 
-std::vector<Point> &MeshData::getVectices() const
+std::vector<Point> &MeshData::getVectices()
 {
     return this->_orgVectices;
 }
 
-std::vector<Point>& MeshData::getUVs() const
+std::vector<Point>& MeshData::getUVs()
 {
     return this->_UVs;
 }
 
-std::vector<int>& MeshData::getTriangles() const
+std::vector<int>& MeshData::getTriangles()
 {
     return this->_triangles;
 }

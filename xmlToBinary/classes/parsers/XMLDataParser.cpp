@@ -305,7 +305,7 @@ MeshData* XMLDataParser::parseMeshData(const dragonBones::XMLElement *MeshXML) c
         else
         {
             p_y = atof(vertexXML->GetText()) / _armatureScale;
-            meshData->_orgVectices.push_back(Point(p_x,p_y));
+            meshData->addVectex(Point(p_x,p_y));
         }
         
         scanIndex++;
@@ -575,8 +575,9 @@ void XMLDataParser::parseFrame(const XMLElement &frameXML, Frame &frame) const
 
 	// curve data
 //	if (frameXML.FindAttribute(ConstValues::A_CURVE.c_str()))
-	{
+	
         std::vector<Point> curvePoint;
+        curvePoint.clear();
         float p_x = 0.f;
         float p_y = 0.f;
         int scanIndex = 0;
@@ -603,7 +604,7 @@ void XMLDataParser::parseFrame(const XMLElement &frameXML, Frame &frame) const
                 frame.curve->_pointList.push_back(value);
             }
         }
-	}
+
 }
 
 void XMLDataParser::parseTransform(const XMLElement &transformXML, Transform &transform) const

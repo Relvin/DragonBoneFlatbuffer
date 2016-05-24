@@ -41,18 +41,18 @@ public:
     int getIndexInVectices(float x, float y) const;
     
     Point getUVByIndex(int index) const;
-    std::vector<Point>& getVectices() const;
+    std::vector<Point>& getVectices() ;
     Point getVectexByIndex(int index) const;
-    std::vector<int>& getTriangles() const;
-    std::vector<Point>& getUVs() const;
+    std::vector<int>& getTriangles() ;
+    std::vector<Point>& getUVs() ;
     inline int getTriangleCount() const {return this->_triangles.size() / 3;};
     
     void resetVertices();
 
-    mutable std::vector<VECTEX_UV> _vectices;
-    mutable std::vector<int> _triangles;
-    mutable std::vector<Point> _UVs;
-    mutable std::vector<Point> _orgVectices;
+    std::vector<VECTEX_UV> _vectices;
+    std::vector<int> _triangles;
+    std::vector<Point> _UVs;
+    std::vector<Point> _orgVectices;
     
     float _width;
     float _height;

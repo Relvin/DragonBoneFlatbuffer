@@ -419,6 +419,8 @@ FFDTimeline* BinaryParser::parseFFDTimelineFromBinary(const dragonBones::FFDTime
     parseFlatStringToString(timelineOption->name(), ffdTimeline->name);
     parseFlatStringToString(timelineOption->skinName(), ffdTimeline->skinName);
     parseFlatStringToString(timelineOption->slotName(), ffdTimeline->slotName);
+    ffdTimeline->duration = timelineOption->timeline()->duration();
+    ffdTimeline->scale = timelineOption->timeline()->scale();
     ffdTimeline->offset = timelineOption->offset();
     return ffdTimeline;
 }
@@ -460,6 +462,19 @@ void BinaryParser::parseFrameFromBinary(const FrameOption *frameOption, Frame *f
     parseFlatStringToString(frameOption->action(),frame->action);
     parseFlatStringToString(frameOption->event(),frame->event);
     parseFlatStringToString(frameOption->sound(),frame->sound);
+    
+    auto curveOption = frameOption->curve();
+    if(curveOption)
+    {
+        frame->curve = new CurveData();
+        
+        for (int idx = 0; idx < curveOption->pointList()->size();idx++)
+        {
+            auto potOption = curveOption->pointList()->Get(idx);
+            Point point (potOption->x(),potOption->y());
+            frame->curve->_pointList.push_back(point);
+        }
+    }
 
 }
 

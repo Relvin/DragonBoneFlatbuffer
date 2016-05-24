@@ -10,6 +10,7 @@ namespace dragonBones {
 
 struct PointOption;
 struct TransformOption;
+struct Vec2Option;
 struct IKDataOption;
 struct CurveDataOption;
 struct FrameOption;
@@ -65,6 +66,39 @@ MANUALLY_ALIGNED_STRUCT(4) TransformOption {
   float scaleY() const { return flatbuffers::EndianScalar(scaleY_); }
 };
 STRUCT_END(TransformOption, 24);
+
+struct Vec2Option : private flatbuffers::Table {
+  float x() const { return GetField<float>(4, 0); }
+  float y() const { return GetField<float>(6, 0); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<float>(verifier, 4 /* x */) &&
+           VerifyField<float>(verifier, 6 /* y */) &&
+           verifier.EndTable();
+  }
+};
+
+struct Vec2OptionBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_x(float x) { fbb_.AddElement<float>(4, x, 0); }
+  void add_y(float y) { fbb_.AddElement<float>(6, y, 0); }
+  Vec2OptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  Vec2OptionBuilder &operator=(const Vec2OptionBuilder &);
+  flatbuffers::Offset<Vec2Option> Finish() {
+    auto o = flatbuffers::Offset<Vec2Option>(fbb_.EndTable(start_, 2));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Vec2Option> CreateVec2Option(flatbuffers::FlatBufferBuilder &_fbb,
+   float x = 0,
+   float y = 0) {
+  Vec2OptionBuilder builder_(_fbb);
+  builder_.add_y(y);
+  builder_.add_x(x);
+  return builder_.Finish();
+}
 
 struct IKDataOption : private flatbuffers::Table {
   const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(4); }
@@ -123,11 +157,12 @@ inline flatbuffers::Offset<IKDataOption> CreateIKDataOption(flatbuffers::FlatBuf
 }
 
 struct CurveDataOption : private flatbuffers::Table {
-  const flatbuffers::Vector<const PointOption *> *pointList() const { return GetPointer<const flatbuffers::Vector<const PointOption *> *>(4); }
+  const flatbuffers::Vector<flatbuffers::Offset<Vec2Option>> *pointList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<Vec2Option>> *>(4); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* pointList */) &&
            verifier.Verify(pointList()) &&
+           verifier.VerifyVectorOfTables(pointList()) &&
            verifier.EndTable();
   }
 };
@@ -135,7 +170,7 @@ struct CurveDataOption : private flatbuffers::Table {
 struct CurveDataOptionBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_pointList(flatbuffers::Offset<flatbuffers::Vector<const PointOption *>> pointList) { fbb_.AddOffset(4, pointList); }
+  void add_pointList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Vec2Option>>> pointList) { fbb_.AddOffset(4, pointList); }
   CurveDataOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   CurveDataOptionBuilder &operator=(const CurveDataOptionBuilder &);
   flatbuffers::Offset<CurveDataOption> Finish() {
@@ -145,7 +180,7 @@ struct CurveDataOptionBuilder {
 };
 
 inline flatbuffers::Offset<CurveDataOption> CreateCurveDataOption(flatbuffers::FlatBufferBuilder &_fbb,
-   flatbuffers::Offset<flatbuffers::Vector<const PointOption *>> pointList = 0) {
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Vec2Option>>> pointList = 0) {
   CurveDataOptionBuilder builder_(_fbb);
   builder_.add_pointList(pointList);
   return builder_.Finish();
@@ -615,8 +650,8 @@ struct MeshDataOption : private flatbuffers::Table {
   float width() const { return GetField<float>(4, 0); }
   float height() const { return GetField<float>(6, 0); }
   const flatbuffers::Vector<int32_t> *triangles() const { return GetPointer<const flatbuffers::Vector<int32_t> *>(8); }
-  const flatbuffers::Vector<const PointOption *> *vectices() const { return GetPointer<const flatbuffers::Vector<const PointOption *> *>(10); }
-  const flatbuffers::Vector<const PointOption *> *uvs() const { return GetPointer<const flatbuffers::Vector<const PointOption *> *>(12); }
+  const flatbuffers::Vector<flatbuffers::Offset<Vec2Option>> *vectices() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<Vec2Option>> *>(10); }
+  const flatbuffers::Vector<flatbuffers::Offset<Vec2Option>> *uvs() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<Vec2Option>> *>(12); }
   const DisplayDataOption *displayData() const { return GetPointer<const DisplayDataOption *>(14); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -626,8 +661,10 @@ struct MeshDataOption : private flatbuffers::Table {
            verifier.Verify(triangles()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* vectices */) &&
            verifier.Verify(vectices()) &&
+           verifier.VerifyVectorOfTables(vectices()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* uvs */) &&
            verifier.Verify(uvs()) &&
+           verifier.VerifyVectorOfTables(uvs()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* displayData */) &&
            verifier.VerifyTable(displayData()) &&
            verifier.EndTable();
@@ -640,8 +677,8 @@ struct MeshDataOptionBuilder {
   void add_width(float width) { fbb_.AddElement<float>(4, width, 0); }
   void add_height(float height) { fbb_.AddElement<float>(6, height, 0); }
   void add_triangles(flatbuffers::Offset<flatbuffers::Vector<int32_t>> triangles) { fbb_.AddOffset(8, triangles); }
-  void add_vectices(flatbuffers::Offset<flatbuffers::Vector<const PointOption *>> vectices) { fbb_.AddOffset(10, vectices); }
-  void add_uvs(flatbuffers::Offset<flatbuffers::Vector<const PointOption *>> uvs) { fbb_.AddOffset(12, uvs); }
+  void add_vectices(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Vec2Option>>> vectices) { fbb_.AddOffset(10, vectices); }
+  void add_uvs(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Vec2Option>>> uvs) { fbb_.AddOffset(12, uvs); }
   void add_displayData(flatbuffers::Offset<DisplayDataOption> displayData) { fbb_.AddOffset(14, displayData); }
   MeshDataOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   MeshDataOptionBuilder &operator=(const MeshDataOptionBuilder &);
@@ -655,8 +692,8 @@ inline flatbuffers::Offset<MeshDataOption> CreateMeshDataOption(flatbuffers::Fla
    float width = 0,
    float height = 0,
    flatbuffers::Offset<flatbuffers::Vector<int32_t>> triangles = 0,
-   flatbuffers::Offset<flatbuffers::Vector<const PointOption *>> vectices = 0,
-   flatbuffers::Offset<flatbuffers::Vector<const PointOption *>> uvs = 0,
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Vec2Option>>> vectices = 0,
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<Vec2Option>>> uvs = 0,
    flatbuffers::Offset<DisplayDataOption> displayData = 0) {
   MeshDataOptionBuilder builder_(_fbb);
   builder_.add_displayData(displayData);
