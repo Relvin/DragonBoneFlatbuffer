@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\flatbuffers">
+      <UniqueIdentifier>{13c7d20c-366b-4966-8fe1-d15282cfac8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\geoms">
+      <UniqueIdentifier>{5defe20d-816a-4f7e-b099-03500cd83a2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\objects">
+      <UniqueIdentifier>{1e6cc31c-dd81-414a-ba4f-df0622553de7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\parsers">
+      <UniqueIdentifier>{231bc5e1-cd32-47cb-b6e8-ac4012bc2646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\3rd">
+      <UniqueIdentifier>{bbff3f85-5b9a-485e-b4c8-6380f5d66388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\3rd\tinyxml2">
+      <UniqueIdentifier>{72916c44-8bc8-453e-8e2b-9cc673264187}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Classes\DragonBones.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\dragonbones_generated.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Platform.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\xmlToBinary.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\flatbuffers\flatbuffers.h">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\flatbuffers\idl.h">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\flatbuffers\util.h">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\geoms\ColorTransform.h">
+      <Filter>源文件\geoms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\geoms\Matrix.h">
+      <Filter>源文件\geoms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\geoms\Point.h">
+      <Filter>源文件\geoms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\geoms\Rectangle.h">
+      <Filter>源文件\geoms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\geoms\Transform.h">
+      <Filter>源文件\geoms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\AnimationData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\ArmatureData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\BoneData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\CurveData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\DisplayData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\DragonBonesData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\FFDFrame.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\FFDTimeline.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\Frame.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\IKData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\MeshData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\SkinData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\SlotData.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\SlotFrame.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\SlotTimeline.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\Timeline.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\TransformFrame.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\objects\TransformTimeline.h">
+      <Filter>源文件\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\parsers\BaseDataParser.h">
+      <Filter>源文件\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\parsers\BinaryParser.h">
+      <Filter>源文件\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\parsers\ConstValues.h">
+      <Filter>源文件\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\parsers\JSONDataParser.h">
+      <Filter>源文件\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\parsers\XMLDataParser.h">
+      <Filter>源文件\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\3rd\tinyxml2\dbtinyxml2.h">
+      <Filter>源文件\3rd\tinyxml2</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Classes\Platform.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\xmlToBinary.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_cpp.cpp">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_fbs.cpp">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_general.cpp">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_go.cpp">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_text.cpp">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_parser.cpp">
+      <Filter>源文件\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\objects\FFDFrame.cpp">
+      <Filter>源文件\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\objects\FFDTimeline.cpp">
+      <Filter>源文件\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\objects\IKData.cpp">
+      <Filter>源文件\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\objects\MeshData.cpp">
+      <Filter>源文件\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\parsers\BaseDataParser.cpp">
+      <Filter>源文件\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\parsers\BinaryParser.cpp">
+      <Filter>源文件\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\parsers\ConstValues.cpp">
+      <Filter>源文件\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\parsers\JSONDataParser.cpp">
+      <Filter>源文件\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\parsers\XMLDataParser.cpp">
+      <Filter>源文件\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\3rd\tinyxml2\dbtinyxml2.cpp">
+      <Filter>源文件\3rd\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

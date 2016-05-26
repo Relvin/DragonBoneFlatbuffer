@@ -42,10 +42,10 @@ void testWrite()
 int main(int argc, const char * argv[]) {
     // insert code here...
 //    
-    testWrite();
+//    testWrite();
 //    testRead();
     
-    return 0;
+//    return 0;
     std::string extFilePath = "";
     std::string exeName = "";
 	std::string project_path = "";

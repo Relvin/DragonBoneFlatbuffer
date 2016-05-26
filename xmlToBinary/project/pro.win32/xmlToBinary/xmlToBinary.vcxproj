@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1DD61B6A-00E4-4342-BA0C-069D6D79329C}</ProjectGuid>
+    <RootNamespace>xmlToBinary</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>CC_TARGET_OS_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>CC_TARGET_OS_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Classes\3rd\tinyxml2\dbtinyxml2.h" />
+    <ClInclude Include="..\..\..\Classes\DragonBones.h" />
+    <ClInclude Include="..\..\..\Classes\dragonbones_generated.h" />
+    <ClInclude Include="..\..\..\Classes\flatbuffers\flatbuffers.h" />
+    <ClInclude Include="..\..\..\Classes\flatbuffers\idl.h" />
+    <ClInclude Include="..\..\..\Classes\flatbuffers\util.h" />
+    <ClInclude Include="..\..\..\Classes\geoms\ColorTransform.h" />
+    <ClInclude Include="..\..\..\Classes\geoms\Matrix.h" />
+    <ClInclude Include="..\..\..\Classes\geoms\Point.h" />
+    <ClInclude Include="..\..\..\Classes\geoms\Rectangle.h" />
+    <ClInclude Include="..\..\..\Classes\geoms\Transform.h" />
+    <ClInclude Include="..\..\..\Classes\objects\AnimationData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\ArmatureData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\BoneData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\CurveData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\DisplayData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\DragonBonesData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\FFDFrame.h" />
+    <ClInclude Include="..\..\..\Classes\objects\FFDTimeline.h" />
+    <ClInclude Include="..\..\..\Classes\objects\Frame.h" />
+    <ClInclude Include="..\..\..\Classes\objects\IKData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\MeshData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\SkinData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\SlotData.h" />
+    <ClInclude Include="..\..\..\Classes\objects\SlotFrame.h" />
+    <ClInclude Include="..\..\..\Classes\objects\SlotTimeline.h" />
+    <ClInclude Include="..\..\..\Classes\objects\Timeline.h" />
+    <ClInclude Include="..\..\..\Classes\objects\TransformFrame.h" />
+    <ClInclude Include="..\..\..\Classes\objects\TransformTimeline.h" />
+    <ClInclude Include="..\..\..\Classes\parsers\BaseDataParser.h" />
+    <ClInclude Include="..\..\..\Classes\parsers\BinaryParser.h" />
+    <ClInclude Include="..\..\..\Classes\parsers\ConstValues.h" />
+    <ClInclude Include="..\..\..\Classes\parsers\JSONDataParser.h" />
+    <ClInclude Include="..\..\..\Classes\parsers\XMLDataParser.h" />
+    <ClInclude Include="..\..\..\Classes\Platform.h" />
+    <ClInclude Include="..\..\..\Classes\xmlToBinary.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Classes\3rd\tinyxml2\dbtinyxml2.cpp" />
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_cpp.cpp" />
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_fbs.cpp" />
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_general.cpp" />
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_go.cpp" />
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_gen_text.cpp" />
+    <ClCompile Include="..\..\..\Classes\flatbuffers\idl_parser.cpp" />
+    <ClCompile Include="..\..\..\Classes\objects\FFDFrame.cpp" />
+    <ClCompile Include="..\..\..\Classes\objects\FFDTimeline.cpp" />
+    <ClCompile Include="..\..\..\Classes\objects\IKData.cpp" />
+    <ClCompile Include="..\..\..\Classes\objects\MeshData.cpp" />
+    <ClCompile Include="..\..\..\Classes\parsers\BaseDataParser.cpp" />
+    <ClCompile Include="..\..\..\Classes\parsers\BinaryParser.cpp" />
+    <ClCompile Include="..\..\..\Classes\parsers\ConstValues.cpp" />
+    <ClCompile Include="..\..\..\Classes\parsers\JSONDataParser.cpp" />
+    <ClCompile Include="..\..\..\Classes\parsers\XMLDataParser.cpp" />
+    <ClCompile Include="..\..\..\Classes\Platform.cpp" />
+    <ClCompile Include="..\..\..\Classes\xmlToBinary.cpp" />
+    <ClCompile Include="..\..\main.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

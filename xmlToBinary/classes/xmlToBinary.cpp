@@ -689,14 +689,6 @@ bool xmlToBinary::writeToPath(const char* data,size_t size)
     fileName += suffix;
     binaryFilePath = outFilePath + fileName;
     
-	
-	if (Platform::DirIsExist(outFilePath.c_str()) == false && notCreate == false)
-    {
-		printf("%s outFilePath not exit \n",outFilePath.c_str());
-		Platform::create_multi_dir(outFilePath.c_str());
-		notCreate = true;
-    }
-    
     FILE *fp;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	
