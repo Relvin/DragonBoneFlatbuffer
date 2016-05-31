@@ -95,7 +95,7 @@ bool xmlToBinary::readFileAndConverToBinary(std::string &path,std::string& outPa
     }
     else
     {
-        printf("%s   ", m_filePath.c_str());
+        printf("%s\t", m_filePath.c_str());
         if (suffix == "xml")
         {
             readXMLB = false;
@@ -708,7 +708,7 @@ bool xmlToBinary::writeToPath(const char* data,size_t size)
     }
     fwrite(data, sizeof(unsigned char), size, fp);//(buffer,sizeof(unsigned char), *size,fp);
     fclose(fp);
-	printf("=====>%s\n", binaryFilePath.c_str());
+	printf("\t=====>\t%s\n", binaryFilePath.c_str());
     return true;
 }
 
