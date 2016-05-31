@@ -89,9 +89,25 @@ XMLDataParser::~XMLDataParser()
 
 DragonBonesData* XMLDataParser::parseDragonBonesData(const void *rawDragonBonesData,float scale) const
 {
+    if (!rawDragonBonesData)
+    {
+        printf("\tNot Dragonbones data! \n");
+        return nullptr;
+    }
     _armatureScale = 1;
     const XMLElement *dragonBonesXML = static_cast<const XMLElement*>(rawDragonBonesData);
+    auto attribute = dragonBonesXML->FindAttribute(ConstValues::A_VERSION.c_str());
+    if (!attribute)
+    {
+        printf("\tNot Dragonbones data! \n");
+        return nullptr;
+    }
     std::string version = dragonBonesXML->Attribute(ConstValues::A_VERSION.c_str());
+    if (version < "4.0")
+    {
+        printf("\tversion error! \n");
+        return nullptr;
+    }
     // TODO
     /*
     switch(version)

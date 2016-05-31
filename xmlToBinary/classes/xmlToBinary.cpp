@@ -95,6 +95,7 @@ bool xmlToBinary::readFileAndConverToBinary(std::string &path,std::string& outPa
     }
     else
     {
+        printf("%s   ", m_filePath.c_str());
         if (suffix == "xml")
         {
             readXMLB = false;
@@ -102,7 +103,11 @@ bool xmlToBinary::readFileAndConverToBinary(std::string &path,std::string& outPa
             dragonBones::XMLDocument doc;
             doc.Parse(reinterpret_cast<char*>(buffer), readsize);
             auto dragonBonesData = parser.parseDragonBonesData(doc.RootElement());
-            this->convertDragonboneToBinary(dragonBonesData);
+            if (dragonBonesData)
+            {
+                this->convertDragonboneToBinary(dragonBonesData);
+            }
+            
         }
         else
         {
@@ -657,7 +662,6 @@ flatbuffers::Offset<ColorTransformOption> xmlToBinary::convertColorTransformData
 
 bool xmlToBinary::writeToPath(const char* data,size_t size)
 {
-	printf("%s\n", m_filePath.c_str());
     std::string binaryFilePath = m_filePath;
     std::string suffix = ".xmlb";
     if (readXMLB)
@@ -699,7 +703,7 @@ bool xmlToBinary::writeToPath(const char* data,size_t size)
     
     if (!fp)
     {
-        printf("%s write error !\n",binaryFilePath.c_str());
+        printf("\t%s write error !\n",binaryFilePath.c_str());
         return false;
     }
     fwrite(data, sizeof(unsigned char), size, fp);//(buffer,sizeof(unsigned char), *size,fp);

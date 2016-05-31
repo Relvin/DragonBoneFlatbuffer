@@ -15,10 +15,12 @@
 #else
 #include <unistd.h>
 #endif
+
+#ifdef test
 void testRead()
 {
     
-    std::string filename = "/Users/relvin/Desktop/Ubbie/Ubbie.xmlb";
+    std::string filename = "/Users/dengqinghong/Desktop/xml/Ubbie/Ubbie.xml";
     filename += "";
     
     std::string outpath = "/Users/relvin/Desktop/Ubbie/";
@@ -38,48 +40,34 @@ void testWrite()
     
     std::cout << " ===>SUCCESS!<===\n";
 }
-
+#endif  //end test
 int main(int argc, const char * argv[]) {
     // insert code here...
-//    
-//    testWrite();
-//    testRead();
+//
+#ifdef test
+    testWrite();
+    testRead();
     
-//    return 0;
-    std::string extFilePath = "";
-    std::string exeName = "";
-	std::string project_path = "";
+    return 0;
+#endif // end test
 
 	if (argc < 3)
 	{
+        printf("arguments error!");
         return -1;
 	}
-    
-    project_path = argv[1];
-    extFilePath = argv[2];
-	
-    char buf[1024] = "\0";
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-     _getcwd( buf, sizeof(buf));
-#else
-    getcwd(buf,sizeof(buf));
-#endif
-	project_path = buf + project_path;
-	extFilePath = buf + extFilePath;
+
+    std::string filename = argv[1];
+    std::string extFilePath = argv[2];
 	
     
 //    printf("project_path = %s \n",project_path.c_str());
-    std::vector<std::string> fileArray = Platform::loopFiles(project_path.c_str());
-    for (int idx = 0;idx < fileArray.size();idx++)
+
     {
-		xmlToBinary::getInstance()->readFileAndConverToBinary(fileArray.at(idx), extFilePath);
+		xmlToBinary::getInstance()->readFileAndConverToBinary(filename, extFilePath);
     }
     
 //    std::string filePath = "/Users/dengqinghong/Desktop/1-boss.xml";
-    
-    
-    std::cout << " ===>SUCCESS!<===\n";
 
     return 0;
 }
